@@ -8,6 +8,7 @@
         <input type="text" placeholder="Your email or phone number">
         <input type="text" placeholder="Confirm email/phone number">
         <input type="text" placeholder="Secure password">
+        <p id="terms">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
         <button type="submit" @click.prevent>
           Create your Sproutt account
         </button>
@@ -84,6 +85,10 @@ form {
       font-weight: bold;
       font-size: 25px;
     }
+    p:nth-child(2) {
+      margin-top: 5px;
+      margin-bottom: 20px;
+    }
     input {
       margin-top: 15px;
       border: none;
@@ -93,6 +98,14 @@ form {
       font-size: 15px;
       width: calc(100% - 13px);
       padding: 10px 0 10px 10px;
+    }
+    p#terms {
+      padding-top: 60px;
+      font-size: 14px;
+    } 
+    a {
+      font-weight: bold;
+      color: rgb(0, 89, 255);
     }
     button {
       border-radius: 9px;
