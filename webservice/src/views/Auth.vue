@@ -5,13 +5,20 @@
     </div>
     <div id="bottom">
       <div id="accounts">
-        <ul class="accounts" v-for="(acc, i) in accounts" :key="i">
-          <li class="account">
+        <div id="top_placeholder"></div>
+        <ul class="accounts">
+          <p id="login_as">Login as</p>
+          <li class="account" v-for="(acc, i) in accounts" :key="i">
             <img :src="require(`@/assets/profile_photos/${acc.id}.png`)" alt="">
             <p>{{ acc.name }}</p>
             <p>Last active {{ acc.lastActive }} days ago.</p>
           </li>
+          <li class="account" id="add_account">
+            <p id="plus">+</p>
+            <p id="text_add_account">Add Account</p>
+          </li>
         </ul>
+        <div id="bottom_placeholder"></div>
       </div>
       <div id="license"></div>
     </div>
@@ -29,8 +36,8 @@ export default {
           lastActive: '2' // days
         },
         {
-          id: '1',
-          name: 'Steve Jobs',
+          id: '2',
+          name: 'Vera Smith',
           lastActive: '2' // days
         }
       ]
@@ -47,6 +54,16 @@ p {
   margin: 0;
 }
 
+#top_placeholder {
+  height: 25%;
+  width: 100%;
+}
+
+#bottom_placeholder {
+  height: 25%;
+  width: 100%;
+}
+
 #top {
   background: rgb(6,8,98);
   background: linear-gradient(0deg, rgba(6,8,98,1) 0%, rgba(181,0,255,1) 100%);
@@ -57,28 +74,57 @@ p {
   background-color: white;
   width: 100%;
   height: 60%;
+  #login_as {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(93, 93, 93);
+  }
   #accounts {
+    padding: 0;
     width: 100%;
     height: 90%;
     .account {
+      background: white;
       border-radius: 7px;
       margin: 10px;
-      padding: 15px 20px 20px 20px;
+      padding: 15px 10px 20px 10px;
       float: left;
-      box-shadow: 0px 0px 15px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.07);
       img {
         height: 150px;
         width: 150px;
+        border-radius: 100%;
+      }
+      p {
+        text-align: center;
+        font-weight: bold;
       }
       p:nth-child(2) {
-        font-weight: bold;
         font-size: 20px;
         margin-top: 10px;
       }
       p:nth-child(3) {
         font-size: 12px;
         margin-top: 10px;
-        margin-bottom: 20px;
+        color: rgba(0, 0, 0, 0.6)
+      }
+    }
+    #add_account {
+      background-color: rgba(0, 132, 255, 0.1) !important;
+      box-shadow: none !important;
+      height: 215px;
+      width: 150px;
+      #plus {
+        color: rgb(0, 132, 255);
+        font-weight: bold;
+        font-size: 100px !important;
+      }
+      p {
+        margin: 0 !important;
+      }
+      p#text_add_account {
+        color: rgb(0, 132, 255);
+        font-size: 18px;
       }
     }
   }
