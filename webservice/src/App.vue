@@ -17,6 +17,15 @@ ul {
   }
 }
 
+button {
+  cursor: pointer;
+}
+
+input, button {
+  font-family: 'Quicksand';
+  font-weight: bold;
+}
+
 p {
   font-family: 'Quicksand';
   margin: 0;

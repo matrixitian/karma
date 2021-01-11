@@ -1,5 +1,18 @@
 <template>
   <div class="main">
+    <form>
+      <div id="center">
+        <p>Create a new account</p>
+        <p>Join Sproutt and find new people alike!</p>
+        <input type="text" placeholder="Your first name">
+        <input type="text" placeholder="Your email or phone number">
+        <input type="text" placeholder="Confirm email/phone number">
+        <input type="text" placeholder="Secure password">
+        <button type="submit" @click.prevent>
+          Create your Sproutt account
+        </button>
+      </div>
+    </form>
     <div id="top">
       <p></p>
     </div>
@@ -50,6 +63,54 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+form {
+  float: right;
+  position: absolute;
+  height: 550px;
+  width: 350px;
+  border-radius: 10px;
+  top: 50%;
+  bottom: 50%;
+  right: -150px;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.07);
+  div#center {
+    // background-color: blue;
+    width: 80%;
+    margin: auto;
+    p:nth-child(1) {
+      margin-top: 30px;
+      font-weight: bold;
+      font-size: 25px;
+    }
+    input {
+      margin-top: 15px;
+      border: none;
+      outline: none;
+      background-color: rgba(0, 0, 0, 0.12);
+      border-radius: 9px;
+      font-size: 15px;
+      width: calc(100% - 13px);
+      padding: 10px 0 10px 10px;
+    }
+    button {
+      border-radius: 9px;
+      background: rgb(6,8,98);
+      background: linear-gradient(340deg, rgb(90, 11, 126) 0%, rgba(181,0,255,1) 100%);
+      color: white;
+      font-size: 15px;;
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px 0 10px 0;
+      border: 2px solid white;
+      &:hover {
+        outline: 3px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
 p {
   margin: 0;
 }
