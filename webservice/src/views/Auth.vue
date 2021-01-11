@@ -1,21 +1,28 @@
 <template>
   <div class="main">
-    <form>
-      <div id="center">
-        <p>Create a new account</p>
-        <p>Join Sproutt and find new people alike!</p>
-        <input type="text" placeholder="Your first name">
-        <input type="text" placeholder="Your email or phone number">
-        <input type="text" placeholder="Confirm email/phone number">
-        <input type="text" placeholder="Secure password">
-        <p id="terms">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
-        <button type="submit" @click.prevent>
-          Create your Sproutt account
-        </button>
-      </div>
-    </form>
+      <form>
+        <transition name="slide-fade">
+        <div id="center" v-if="mounted">
+          <p>Create a new account</p>
+          <p>Join Sproutt and find new people alike!</p>
+          <input type="text" placeholder="Your first name" ref="fname">
+          <input type="text" placeholder="Your email or phone number">
+          <transition name="slide-fade">
+            <input v-if="showForm" type="text" placeholder="Confirm email/phone number">
+          </transition>
+          <input type="text" placeholder="Secure password">
+          <p id="err_msg">
+            {{ err_msg }}
+          </p>
+          <p id="terms">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
+          <button type="submit" @click.prevent>
+            Create your Sproutt account
+          </button>
+        </div>
+        </transition>
+      </form>
     <div id="top">
-      <p></p>
+      <button @click="showForm = !showForm">Toggle</button>
     </div>
     <div id="bottom">
       <div id="accounts">
@@ -43,6 +50,10 @@
 export default {
   data() {
     return {
+      mounted: false,
+      showForm: false,
+      err_messages: [],
+      err_msg: '',
       accounts: [
         {
           id: '1',
@@ -57,6 +68,10 @@ export default {
       ]
     }
   },
+  mounted() {
+    this.mounted = true
+    // this.$refs.fname.focus()
+  },
   computed: {
     
   }
@@ -64,6 +79,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter-from, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
 form {
   float: right;
   position: absolute;
@@ -106,6 +133,10 @@ form {
     a {
       font-weight: bold;
       color: rgb(0, 89, 255);
+      cursor: pointer;
+      &:hover {
+        color: rgb(56, 149, 211);
+      }
     }
     button {
       border-radius: 9px;
@@ -117,8 +148,10 @@ form {
       width: 100%;
       padding: 10px 0 10px 0;
       border: 2px solid white;
+      outline: none;
       &:hover {
-        outline: 3px solid rgba(0, 0, 0, 0.1);
+        transition: .15s ease;
+        transform: scale(1.03);
       }
     }
   }
