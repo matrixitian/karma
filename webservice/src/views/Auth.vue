@@ -103,7 +103,7 @@ export default {
 <style lang="scss" scoped>
 
 .centerer {
-  width: 1000px;
+  width: 1500px;
   margin: auto;
 }
 
@@ -118,6 +118,7 @@ export default {
     bottom: 0;
     width: 500px;
     height: 250px;
+    right: 500px;
     #teens {
       width: 500px;
       height: 250px;
@@ -146,7 +147,7 @@ form {
   border-radius: 10px;
   top: 50%;
   bottom: 50%;
-  right: -150px;
+  right: 0;
   transform: translate(-50%, -50%);
   background-color: white;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.07);
@@ -269,7 +270,8 @@ p {
   }
   #accounts {
     padding: 0;
-    max-width: 100%;
+    margin: auto;
+    max-width: 1500px;
     height: 90%;
     .account {
       background: white;
