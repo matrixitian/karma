@@ -6,38 +6,42 @@
           <p>Create a new account</p>
           <p>Join Sproutt and find new people alike!</p>
           <input type="text" placeholder="Your first name" ref="fname">
-          <input type="text" placeholder="Your email or phone number">
+          <input type="text" placeholder="Your email or phone number"
+          @focus="showForm = true">
           <transition name="slide-fade">
             <input v-if="showForm" type="text" placeholder="Confirm email/phone number">
           </transition>
           <input type="text" placeholder="Secure password">
-          <p id="err_msg">
-            {{ err_msg }}
+          <p id="err_msg" v-if="showInfo" :class="{info_warning}">
+            {{ curInfoMessage }}
           </p>
           <p id="terms">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
           <button type="submit" @click.prevent>
             Create your Sproutt account
           </button>
+          <p id="reset_password">Forgot your password?</p>
         </div>
         </transition>
       </form>
     <div id="top">
-      <button @click="showForm = !showForm">Toggle</button>
     </div>
     <div id="bottom">
       <div id="accounts">
         <div id="top_placeholder"></div>
         <ul class="accounts">
           <p id="login_as">Login as</p>
+
           <li class="account" v-for="(acc, i) in accounts" :key="i">
             <img :src="require(`@/assets/profile_photos/${acc.id}.png`)" alt="">
             <p>{{ acc.name }}</p>
             <p>Last active {{ acc.lastActive }} days ago.</p>
           </li>
+        
           <li class="account" id="add_account">
             <p id="plus">+</p>
             <p id="text_add_account">Add Account</p>
           </li>
+
         </ul>
         <div id="bottom_placeholder"></div>
       </div>
@@ -47,13 +51,16 @@
 </template>
 
 <script>
+import infoMessages from '@/js_files/info_messages.json'
+// We need to incorporate translation in here or just have info_messages_de, en etc. and then dynamically load in which json we need
 export default {
   data() {
     return {
+      showInfo: true,
       mounted: false,
       showForm: false,
-      err_messages: [],
-      err_msg: '',
+      infoMessages,
+      curInfoMessage: infoMessages.emailTaken,
       accounts: [
         {
           id: '1',
@@ -68,9 +75,18 @@ export default {
       ]
     }
   },
+  methods: {
+    checkForErrors() {
+        
+    }
+  },
   mounted() {
+    infoMessages 
+
     this.mounted = true
-    // this.$refs.fname.focus()
+    setTimeout(() => {
+      this.$refs.fname.focus()
+    }, 100)
   },
   computed: {
     
@@ -159,6 +175,41 @@ form {
 
 p {
   margin: 0;
+}
+
+#reset_password {
+  color:rgb(255, 255, 255);
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 5px 12px 5px 12px;
+  background: rgb(21, 150, 209);
+  background: linear-gradient(270deg, rgb(173, 53, 228) 0%, rgb(135, 181, 255) 100%);
+  font-size: 14px;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: auto;
+  position: absolute;
+  box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.15);
+}
+
+#err_msg {
+  width: calc(80% - 10px);
+  position: absolute;
+  color: white;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 15px;
+  text-align: center;
+  padding: 5px;
+  background: rgb(27, 209, 21);
+  background: linear-gradient(270deg, rgb(56, 212, 69) 0%, rgb(111, 245, 122) 100%);
+}
+
+#info_warning {
+  background: rgb(209, 90, 21);
+  background: linear-gradient(270deg, rgb(223, 114, 64) 0%, rgb(219, 62, 34) 100%);
 }
 
 #top_placeholder {
