@@ -88,9 +88,9 @@ export default {
           lastActive: '2' // days
         },
         {
-          id: '2',
-          name: 'Vera Smith',
-          lastActive: '2' // days
+          id: '1',
+          name: 'Steve Jobs 2',
+          lastActive: '3' // days
         }
       ]
     }
