@@ -1,6 +1,9 @@
 <template>
   <div class="main">
     <form>
+      <button id="switch_to_login">Or login</button>
+      <p id="moto3">find people alike.</p>
+      <p id="moto4">be yourself.</p>
       <transition name="slide-fade">
       <div id="center" v-if="mounted">
         <p>Create a new account</p>
@@ -19,7 +22,7 @@
         <button type="submit" @click.prevent>
           Create your Sproutt account
         </button>
-        <p id="reset_password">Forgot your password?</p>
+        <!-- <p id="reset_password">Forgot your password?</p> -->
       </div>
       </transition>
     </form>
@@ -104,21 +107,80 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/mixins/unselectable';
+@import '@/assets/mixins/centerX';
 
-#moto1, #moto2 {
+$breakpoint-tablet: 768px;
+@media only screen and (max-width: 1320px) {
+  #bottom {
+    // fixes child moving parent...
+    padding-top: 1px;
+    margin-top: -1px;
+  }
+  #accounts {
+    margin-top: -70px !important;
+  }
+  form {
+    right: -150px !important;
+  }
+  #teens_container {
+    right: 250px !important;
+  }
+  #moto1, #moto2 {
+    visibility: hidden;
+  }
+  #moto3, #moto4 {
+    visibility: visible;
+  }
+}
+
+#switch_to_login {
+  margin-top: -50px;
+  right: 0;
+  position: absolute;
+  border-radius: 9px;
+  background: rgb(6,8,98);
+  background: linear-gradient(340deg, rgb(15, 106, 192) 0%, rgb(28, 164, 255) 100%);
   color: white;
-  font-size: 30px;
+  font-size: 15px;
+  width: 150px;
+  padding: 10px 0 10px 0;
+  border: 2px solid white;
+  outline: none;
+  &:hover {
+    transition: .1s ease-in-out;
+    border: 4px solid white;
+    // border-color: rgb(109, 177, 255);
+  }
+}
+
+#moto1, #moto2, #moto3, #moto4 {
+  @include unselectable;
+  color: white;
   font-weight: bold;
   position: absolute;
-  margin-left: 60px;
+}
+
+#moto3 {
+  top: -50px;
+  font-size: 20px;
+}
+
+#moto4 {
+  top: -30px;
+  font-size: 20px;
 }
 
 #moto1 {
   bottom: 40px;
+  margin-left: 60px;
+  font-size: 30px;
 }
 
 #moto2 {
   bottom: 10px;
+  margin-left: 60px;
+  font-size: 30px;
 }
 
 #logo {
@@ -130,6 +192,10 @@ export default {
 .centerer {
   width: 1500px;
   margin: auto;
+}
+
+p {
+  @include unselectable;
 }
 
 #top {
@@ -145,6 +211,8 @@ export default {
     height: 250px;
     right: 500px;
     #teens {
+  @include unselectable;
+
       width: 500px;
       height: 250px;
     }
@@ -297,7 +365,7 @@ p {
     padding: 0;
     margin: auto;
     max-width: 1500px;
-    height: 90%;
+    height: 100%;
     .account {
       background: white;
       border-radius: 7px;
@@ -348,14 +416,17 @@ p {
       }
     }
   }
-  #license {
+}
+
+ #license {
+    position: absolute;
+    bottom: 0;
     border-top: 1px solid #d8d8d8;
     border-width: 70%;
-    margin: auto;
     width: 80%;
-    height: 10%;
+    height: 50px;
+    @include centerX;
   }
-}
 
 .main {
   padding: 0 !important;
