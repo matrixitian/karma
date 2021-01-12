@@ -25,6 +25,9 @@
     </form>
     <div id="top">
       <div class="centerer">
+        <p id="moto1">find people alike.</p>
+        <p id="moto2">be yourself.</p>
+        <img id="logo" src="@/assets/logo.svg" alt="">
         <div id="teens_container">
           <img id="teens" src="@/assets/teens.svg" alt="">
         </div>
@@ -102,6 +105,28 @@ export default {
 
 <style lang="scss" scoped>
 
+#moto1, #moto2 {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  margin-left: 60px;
+}
+
+#moto1 {
+  bottom: 40px;
+}
+
+#moto2 {
+  bottom: 10px;
+}
+
+#logo {
+  height: 70px;
+  position: absolute;
+  margin: 50px;
+}
+
 .centerer {
   width: 1500px;
   margin: auto;
@@ -116,7 +141,7 @@ export default {
   #teens_container {
     position: absolute;
     bottom: 0;
-    width: 500px;
+    width: 600px;
     height: 250px;
     right: 500px;
     #teens {
@@ -147,7 +172,7 @@ form {
   border-radius: 10px;
   top: 50%;
   bottom: 50%;
-  right: 0;
+  right: 100px;
   transform: translate(-50%, -50%);
   background-color: white;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.07);
