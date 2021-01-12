@@ -1,29 +1,35 @@
 <template>
   <div class="main">
-      <form>
+    <form>
+      <transition name="slide-fade">
+      <div id="center" v-if="mounted">
+        <p>Create a new account</p>
+        <p>Join Sproutt and find new people alike!</p>
+        <input type="text" placeholder="Your first name" ref="fname">
+        <input type="text" placeholder="Your email or phone number"
+        @focus="showForm = true">
         <transition name="slide-fade">
-        <div id="center" v-if="mounted">
-          <p>Create a new account</p>
-          <p>Join Sproutt and find new people alike!</p>
-          <input type="text" placeholder="Your first name" ref="fname">
-          <input type="text" placeholder="Your email or phone number"
-          @focus="showForm = true">
-          <transition name="slide-fade">
-            <input v-if="showForm" type="text" placeholder="Confirm email/phone number">
-          </transition>
-          <input type="text" placeholder="Secure password">
-          <p id="err_msg" v-if="showInfo" :class="{info_warning}">
-            {{ curInfoMessage }}
-          </p>
-          <p id="terms">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
-          <button type="submit" @click.prevent>
-            Create your Sproutt account
-          </button>
-          <p id="reset_password">Forgot your password?</p>
-        </div>
+          <input v-if="showForm" type="text" placeholder="Confirm email/phone number">
         </transition>
-      </form>
+        <input type="text" placeholder="Secure password">
+        <p id="err_msg" v-if="showInfo" :class="{info_warning}">
+          {{ curInfoMessage }}
+        </p>
+        <p id="terms">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
+        <button type="submit" @click.prevent>
+          Create your Sproutt account
+        </button>
+        <p id="reset_password">Forgot your password?</p>
+      </div>
+      </transition>
+    </form>
     <div id="top">
+      <div class="centerer">
+        <div id="teens_container">
+          <img id="teens" src="@/assets/teens.svg" alt="">
+        </div>
+      </div>
+      
     </div>
     <div id="bottom">
       <div id="accounts">
@@ -95,6 +101,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.centerer {
+  width: 1000px;
+  margin: auto;
+}
+
+#top {
+  background: rgb(6,8,98);
+  background: linear-gradient(90deg, rgb(90, 11, 255) 0%, rgb(254, 103, 203) 100%);
+  width: 100%;
+  height: 40%;
+  position: relative;
+  #teens_container {
+    position: absolute;
+    bottom: 0;
+    width: 500px;
+    height: 250px;
+    #teens {
+      width: 500px;
+      height: 250px;
+    }
+  }
+}
+
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
@@ -108,6 +138,7 @@ export default {
 }
 
 form {
+  z-index: 100;
   float: right;
   position: absolute;
   height: 550px;
@@ -183,14 +214,19 @@ p {
   border-radius: 20px;
   padding: 5px 12px 5px 12px;
   background: rgb(21, 150, 209);
-  background: linear-gradient(270deg, rgb(173, 53, 228) 0%, rgb(135, 181, 255) 100%);
+  background: linear-gradient(270deg, rgb(21, 150, 209) 0%, rgb(14, 91, 233) 100%);
   font-size: 14px;
   bottom: -40px;
   left: 50%;
   transform: translateX(-50%);
   margin: auto;
   position: absolute;
-  box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  &:hover {
+    transition: .5s ease;
+    background: rgb(21, 150, 209);
+  }
+  // box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.15);
 }
 
 #err_msg {
@@ -222,12 +258,6 @@ p {
   width: 100%;
 }
 
-#top {
-  background: rgb(6,8,98);
-  background: linear-gradient(0deg, rgba(6,8,98,1) 0%, rgba(181,0,255,1) 100%);
-  width: 100%;
-  height: 40%;
-}
 #bottom {
   background-color: white;
   width: 100%;
@@ -239,7 +269,7 @@ p {
   }
   #accounts {
     padding: 0;
-    width: 100%;
+    max-width: 100%;
     height: 90%;
     .account {
       background: white;
@@ -248,6 +278,11 @@ p {
       padding: 15px 10px 20px 10px;
       float: left;
       box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.07);
+      cursor: pointer;
+      &:hover {
+        transition: .2s ease;
+        transform: scale(1.05);
+      }
       img {
         height: 150px;
         width: 150px;
