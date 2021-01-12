@@ -57,7 +57,15 @@
         </ul>
         <div id="bottom_placeholder"></div>
       </div>
-      <div id="license"></div>
+      <div id="license">
+        <p><span id="copyright">© Sproutt 2020</span>
+        <a href="">Terms </a>
+        <a href="">Privacy </a>
+        <a href="">Cookies </a>
+        <a href="" id="create_ad">Create Ad </a>
+        <a href="">Support</a>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -109,6 +117,39 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/mixins/unselectable';
 @import '@/assets/mixins/centerX';
+
+#license {
+  #copyright {
+    font-weight: bold;
+  }
+  p {
+    margin-top: 12px;
+    font-size: 15px;
+  }
+  span {
+    font-size: 17px;
+  }
+  a:nth-child(2) {
+    margin-left: 50px;
+  }
+  a {
+    margin-right: 20px;
+    text-decoration: none;
+  }
+  #create_ad {
+    background: rgb(27, 209, 21);
+    background: linear-gradient(270deg, rgb(56, 212, 69) 0%, rgb(111, 245, 122) 100%);
+    padding: 3px 6px 3px 6px;
+    border-radius: 7px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.12);
+    border: 1px solid transparent;
+    &:hover {
+      border: 1px solid rgb(31, 190, 39);
+    }
+  }
+}
 
 $breakpoint-tablet: 768px;
 @media only screen and (max-width: 1320px) {
