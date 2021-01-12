@@ -134,6 +134,20 @@ $breakpoint-tablet: 768px;
   }
 }
 
+@media only screen and (max-width: 1100px) {
+  #accounts {
+    transform: scale(0.8);
+    margin-left: -100px !important;
+    height: 100% !important;
+  }
+}
+
+@media only screen and (min-width: 1320px) {
+  #moto3, #moto4 {
+    visibility: hidden;
+  }
+}
+
 #switch_to_login {
   margin-top: -50px;
   right: 0;
@@ -211,8 +225,7 @@ p {
     height: 250px;
     right: 500px;
     #teens {
-  @include unselectable;
-
+    @include unselectable;
       width: 500px;
       height: 250px;
     }
@@ -356,6 +369,9 @@ p {
   background-color: white;
   width: 100%;
   height: 60%;
+  // fixes child moving parent...
+  padding-top: 1px;
+  margin-top: -1px;
   #login_as {
     font-size: 16px;
     font-weight: bold;
@@ -364,6 +380,7 @@ p {
   #accounts {
     padding: 0;
     margin: auto;
+    margin-top: -70px;
     max-width: 1500px;
     height: 100%;
     .account {
