@@ -2,15 +2,11 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const generate = require('../../config/functions/generate')
 const log = console.log
 
 const userSchema = new mongoose.Schema({
-    fname: {
-        type: String,
-        required: false,
-        trim: true
-    },
-    lname: {
+    name: {
         type: String,
         required: false,
         trim: true
@@ -86,8 +82,10 @@ userSchema.statics.findByCredentials = async (username, password) => {
     return user
 }
 
-userSchema.statics.generateUsername = async(fname, lname) => {
-    let generatedUsername = `${fname}.${lname}`.toLowerCase()
+userSchema.statics.generateUsername = async(name) => {
+    const key = generate('random_username_string')
+
+    let generatedUsername = `${name}.${key}`.toLowerCase()
     let countTracker = 0
 
     const Count = ((count) => {
@@ -104,9 +102,9 @@ userSchema.statics.generateUsername = async(fname, lname) => {
     Count(count)
 
     if (countTracker === 0) {
-        generatedUsername = `${fname}.${lname}`.toLowerCase()
+        generatedUsername = `${name}.${key}`.toLowerCase()
     } else {
-        generatedUsername = `${fname}.${lname}.${countTracker}`.toLowerCase()
+        generatedUsername = `${name}.${key}.${countTracker}`.toLowerCase()
     }
 
     return generatedUsername

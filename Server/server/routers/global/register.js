@@ -8,7 +8,7 @@ router.post('/create-user', async (req, res) => {
     let userObject = req.body
 
     try {
-        const generatedUsername = await User.generateUsername(userObject.fname, userObject.lname)
+        const generatedUsername = await User.generateUsername(userObject.name)
         
         userObject.username = generatedUsername
 

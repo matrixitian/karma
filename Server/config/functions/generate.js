@@ -1,10 +1,11 @@
-import generator from 'generate-password'
+// import generator from 'generate-password'
+const generator = require('generate-password')
 
-export default function generate(type) {
+module.exports = function generate(type) {  
     const generatedValue = generator.generate({
-      length: type === "password" ? 24 : 12, 
+      length: type === "password" ? 24 : 8, 
       numbers: true,
-      symbols: true,
+      symbols: false,
       uppercase: true,
       exclude: '{},.;[]',
       excludeSimilarCharacters: true
