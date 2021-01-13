@@ -113,7 +113,7 @@ export default {
       loginFormText: null,
       signUpForm: true,
       errorOccured: false, // only for red class adding
-      showInfo: true,
+      showInfo: false,
       mounted: false,
       showForm: false,
       curInfoMessage: null,
@@ -176,10 +176,20 @@ export default {
 
           const format = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/
           const containsSymbol = format.test(this.password)
+
+          if (!this.password) {
+            this.errorOccured = true
+            this.showInfo = true
+            this.curInfoMessage = this.signUpFormText.data.password
+            throw new Error('Password.')
+          }
+
           const passwordLen = this.password.length
 
           if (!containsSymbol || passwordLen < 8) {
             this.errorOccured = true
+            this.showInfo = true
+            this.$forceUpdate()
             this.curInfoMessage = this.signUpFormText.data.password
             throw new Error('Password.')
           }
@@ -541,15 +551,17 @@ p {
 }
 
 #err_msg {
-  width: calc(80% - 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(70% - 20px);
   position: absolute;
   color: white;
   margin-top: 10px;
   font-weight: bold;
-  font-size: 14px;
-  border-radius: 15px;
+  font-size: 12px;
+  border-radius: 5px;
   text-align: center;
-  padding: 5px;
+  padding: 5px 10px 5px 10px;
   background: rgb(27, 209, 21);
   background: linear-gradient(270deg, rgb(56, 212, 69) 0%, rgb(111, 245, 122) 100%);
 }
