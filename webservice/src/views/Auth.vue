@@ -19,13 +19,19 @@
       <div id="center" v-if="mounted">
         <p>{{ signUpForm ? "Create a new account" : "Login to your account" }}</p>
         <p v-show="signUpForm">Join Sproutt and find new people alike!</p>
-        <input v-show="signUpForm" type="text" placeholder="Your first name" ref="fname">
+        <input v-show="signUpForm" type="text" placeholder="Your first name" ref="fname"
+        v-model="name">
         <input type="text" placeholder="Your email or phone number"
-        @focus="showForm = true">
+        @focus="showForm = true" v-model="emailOrPhoneNum">
         <transition name="slide-fade">
-          <input v-if="showForm && signUpForm" type="text" placeholder="Confirm email/phone number">
+          <input v-if="showForm && signUpForm" type="text" placeholder="Confirm email/phone number"
+          v-model="cEmailOrPhoneNum">
         </transition>
-        <input type="text" :placeholder="passwordPlaceholder()">
+        <input type="text" :placeholder="passwordPlaceholder()" v-model="password"
+        @keyup="updatePasswordMeter()">
+        <div v-show="password" id="password_strength">
+          <p>Password is <span>{{ passwordStrength }}</span></p>
+        </div>
         <p id="err_msg" v-if="showInfo" :class="{info_warning: errorOccured}">
           {{ curInfoMessage }}
         </p>
@@ -84,22 +90,28 @@
 
 <script>
 import axios from 'axios'
-import infoMessages from '@/js_files/info_messages.json'
-// We need to incorporate translation in here or just have info_messages_de, en etc. and then dynamically load in which json we need
+const passwordStrength = require('check-password-strength')
+
 export default {
   data() {
     return {
-      langs: ['english', 'deutsch', 'hrvatski'],
-      pageText: [],
-      signUpFormText: [],
-      loginFormText: [],
+      passwordStrength: null,
+      name: 'Fred',
+      emailOrPhoneNum: 'holidayexplanation@gmail.com',
+      cEmailOrPhoneNum: 'holidayexplanation@gmail.com',
+      password: 'pass1234$',
+      langs: [
+        'english', 'deutsch', 'hrvatski'
+      ],
+      pageText: null,
+      signUpFormText: null,
+      loginFormText: null,
       signUpForm: true,
       errorOccured: false,
       showInfo: true,
       mounted: false,
       showForm: false,
-      infoMessages,
-      curInfoMessage: infoMessages.emailTaken,
+      curInfoMessage: null,
       accounts: [
         {
           id: '1',
@@ -141,18 +153,48 @@ export default {
     }
   },
   methods: {
+    updatePasswordMeter() {
+      if (this.password) {
+        this.passwordStrength = passwordStrength(this.password).value
+      } else {
+        this.passwordStrength = null
+      }
+    },
     authenticate() {
-      axios({
-        method: 'post',
-        url: 'http://localhost:3000/create-user',
-        data: {
-          name: 'Fred',
-          email: 'holidayexplanation@gmail.com',
-          password: 'Password'
+
+        if (this.signUpForm) {
+          if (this.emailOrPhoneNum !== this.cEmailOrPhoneNum) {
+            this.errorOccured = true
+            this.curInfoMessage = this.signUpFormText.data.fieldsDontMatch
+            // this.$forceUpdate()
+            throw new Error('E-mail/Phone number.')
+          }
+
+          const format = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/
+          const containsSymbol = format.test(this.password)
+          const passwordLen = this.password.length
+
+          if (!containsSymbol || passwordLen < 8) {
+            this.errorOccured = true
+            this.curInfoMessage = this.signUpFormText.data.password
+            throw new Error('Password.')
+          }
+
+          axios({
+            method: 'post',
+            url: 'http://localhost:3000/create-user',
+            data: {
+              name: this.name,
+              email: this.emailOrPhoneNum,
+              password: this.password
+            }
+          }).then((res) => {
+            console.log(res)
+          })
+        } else {
+          console.log('login')
         }
-      }).then((res) => {
-        console.log(res)
-      })
+      
     },
     checkForErrors() {
         
@@ -182,6 +224,19 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/mixins/unselectable';
 @import '@/assets/mixins/centerX';
+
+#password_strength {
+  margin: auto;
+  margin-top: -10px;
+  // background-color: red;
+  text-align: center;
+  p {
+    font-size: 14px !important;
+    span {
+      background-color: red;
+    }
+  }
+}
 
 select#lang_selector {
   z-index: 1;
@@ -484,8 +539,8 @@ p {
 }
 
 .info_warning {
-  background: rgb(209, 90, 21);
-  background: linear-gradient(270deg, rgb(223, 114, 64) 0%, rgb(219, 62, 34) 100%);
+  background: rgb(209, 90, 21) !important;
+  background: linear-gradient(270deg, rgb(223, 114, 64) 0%, rgb(219, 62, 34) 100%) !important;
 }
 
 #top_placeholder {
