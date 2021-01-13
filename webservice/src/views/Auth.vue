@@ -113,7 +113,7 @@ export default {
       loginFormText: null,
       signUpForm: true,
       errorOccured: false, // only for red class adding
-      showInfo: false,
+      showInfo: true,
       mounted: false,
       showForm: false,
       curInfoMessage: null,
