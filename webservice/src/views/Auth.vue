@@ -104,7 +104,7 @@ export default {
       name: 'Fred',
       emailOrPhoneNum: 'holidayexplanation@gmail.com',
       cEmailOrPhoneNum: 'holidayexplanation@gmail.com',
-      password: 'pass1234$',
+      password: null,
       langs: [
         'english', 'deutsch', 'hrvatski'
       ],
@@ -171,7 +171,6 @@ export default {
           if (this.emailOrPhoneNum !== this.cEmailOrPhoneNum) {
             this.errorOccured = true
             this.curInfoMessage = this.signUpFormText.data.fieldsDontMatch
-            // this.$forceUpdate()
             throw new Error('E-mail/Phone number.')
           }
 
@@ -183,6 +182,12 @@ export default {
             this.errorOccured = true
             this.curInfoMessage = this.signUpFormText.data.password
             throw new Error('Password.')
+          }
+
+          if (!window.navigator.onLine) {
+            this.errorOccured = true
+            this.curInfoMessage = this.signUpFormText.data.noConnection
+            throw new Error('Client is offline.')
           }
 
           axios({
