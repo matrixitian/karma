@@ -120,7 +120,8 @@ export default {
 
     console.log(storedLang)
 
-    if (storedLang != 'undefined' && storedLang != 'null') {
+    if (storedLang !== 'undefined' && storedLang !== 'null'
+    && storedLang !== undefined && storedLang !== null) {
       this.pageText = require(`@/assets/translations/page_text_${storedLang}.js`)
 
       if (alreadySignedUp) {
@@ -149,8 +150,7 @@ export default {
       return this.signUpForm ? 'Secure password' : 'Your password'
     },
     setLanguage(e) {
-      console.log(e.target.value)
-      // localStorage.setItem('lang', lang)
+      localStorage.setItem('lang', e.target.value)
     }
   },
   mounted() {
