@@ -21,6 +21,10 @@ button {
   cursor: pointer;
 }
 
+select {
+  font-family: 'Quicksand';
+}
+
 input, button {
   font-family: 'Quicksand';
   font-weight: bold;

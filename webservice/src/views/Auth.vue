@@ -30,7 +30,7 @@
           {{ curInfoMessage }}
         </p>
         <p id="terms" v-if="signUpForm">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
-        <button type="submit" @click.prevent
+        <button type="submit" @click.prevent="authenticate()"
         :class="{loginBtnMargin: !signUpForm}">
           {{ signUpForm ? "Create your Sproutt account" : "Login" }}
         </button>
@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import infoMessages from '@/js_files/info_messages.json'
 // We need to incorporate translation in here or just have info_messages_de, en etc. and then dynamically load in which json we need
 export default {
@@ -140,6 +141,19 @@ export default {
     }
   },
   methods: {
+    authenticate() {
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/create-user',
+        data: {
+          name: 'Fred',
+          email: 'holidayexplanation@gmail.com',
+          password: 'Password'
+        }
+      }).then((res) => {
+        console.log(res)
+      })
+    },
     checkForErrors() {
         
     },
@@ -154,8 +168,6 @@ export default {
     }
   },
   mounted() {
-    infoMessages 
-
     this.mounted = true
     setTimeout(() => {
       this.$refs.fname.focus()
