@@ -41,11 +41,11 @@
           {{ curInfoMessage }}
         </p>
         <p id="terms" v-if="signUpForm">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
+        <p v-show="!signUpForm" id="reset_password">Forgot your password?</p>
         <button type="submit" @click.prevent="authenticate()"
         :class="{loginBtnMargin: !signUpForm}">
           {{ signUpForm ? "Create your Sproutt account" : "Login" }}
         </button>
-        <!-- <p id="reset_password">Forgot your password?</p> -->
       </div>
       </transition>
     </form>
@@ -284,7 +284,7 @@ select#lang_selector {
 }
 
 .loginBtnMargin {
-  margin-top: 70px !important;
+  margin-top: 40px !important;
 }
 
 .loginFormHeight {
@@ -449,9 +449,6 @@ p {
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
 .slide-fade-enter-from, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateX(10px);
@@ -537,17 +534,14 @@ p {
   background: rgb(21, 150, 209);
   background: linear-gradient(270deg, rgb(21, 150, 209) 0%, rgb(14, 91, 233) 100%);
   font-size: 14px;
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
   margin: auto;
-  position: absolute;
+  margin-top: 20px;
+  // position: absolute;
   cursor: pointer;
   &:hover {
     transition: .5s ease;
     background: rgb(21, 150, 209);
   }
-  // box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.15);
 }
 
 #err_msg {
