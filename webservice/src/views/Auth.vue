@@ -1,5 +1,11 @@
 <template>
   <div class="main">
+    <select name="langSelector" id="lang_selector"
+    @change="setLanguage($event)">
+      <option v-for="lang in langs" :key="lang" :value="lang">
+        {{ lang }}
+      </option>
+    </select>
     <form :class="{loginFormHeight: !signUpForm}">
       <button id="switch_to_login"
       @click.prevent="toggleFormType()">
@@ -11,9 +17,7 @@
       <p id="moto4">be yourself.</p>
       <transition name="slide-fade">
       <div id="center" v-if="mounted">
-        <p>{{ 
-          signUpForm ? "Create a new account" : "Login to your account"
-          }}</p>
+        <p>{{ signUpForm ? "Create a new account" : "Login to your account" }}</p>
         <p v-show="signUpForm">Join Sproutt and find new people alike!</p>
         <input v-show="signUpForm" type="text" placeholder="Your first name" ref="fname">
         <input type="text" placeholder="Your email or phone number"
@@ -22,7 +26,7 @@
           <input v-if="showForm && signUpForm" type="text" placeholder="Confirm email/phone number">
         </transition>
         <input type="text" :placeholder="passwordPlaceholder()">
-        <p id="err_msg" v-if="showInfo" :class="{info_warning}">
+        <p id="err_msg" v-if="showInfo" :class="{info_warning: errorOccured}">
           {{ curInfoMessage }}
         </p>
         <p id="terms" v-if="signUpForm">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
@@ -84,8 +88,12 @@ import infoMessages from '@/js_files/info_messages.json'
 export default {
   data() {
     return {
-      info_warning: false,
+      langs: ['english', 'deutsch', 'hrvatski'],
+      pageText: [],
+      signUpFormText: [],
+      loginFormText: [],
       signUpForm: true,
+      errorOccured: false,
       showInfo: true,
       mounted: false,
       showForm: false,
@@ -105,6 +113,31 @@ export default {
       ]
     }
   },
+  created() {
+    // import translation
+    const storedLang = localStorage.getItem('lang')
+    const alreadySignedUp = localStorage.getItem('alreadySignedUp')
+
+    console.log(storedLang)
+
+    if (storedLang != 'undefined' && storedLang != 'null') {
+      this.pageText = require(`@/assets/translations/page_text_${storedLang}.js`)
+
+      if (alreadySignedUp) {
+        this.loginFormText = require(`@/assets/translations/login_form_text_${storedLang}.js`)
+      } else {
+        this.signUpFormText = require(`@/assets/translations/signup_form_text_${storedLang}.js`)
+      }
+    } else {
+      this.pageText = require('@/assets/translations/page_text_english.js')
+
+      if (alreadySignedUp) {
+        this.loginFormText = require('@/assets/translations/login_form_text_english.js')
+      } else {
+        this.signUpFormText = require('@/assets/translations/signup_form_text_english.js')
+      }
+    }
+  },
   methods: {
     checkForErrors() {
         
@@ -114,6 +147,10 @@ export default {
     },
     passwordPlaceholder() {
       return this.signUpForm ? 'Secure password' : 'Your password'
+    },
+    setLanguage(e) {
+      console.log(e.target.value)
+      // localStorage.setItem('lang', lang)
     }
   },
   mounted() {
@@ -133,6 +170,25 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/mixins/unselectable';
 @import '@/assets/mixins/centerX';
+
+select#lang_selector {
+  z-index: 1;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 5px 2px 5px 7px;
+  border: 2px solid white;
+  border-radius: 6px;
+  color: white;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  font-weight: bold;
+  option {
+    color: black;
+    cursor: pointer;
+  }
+}
 
 .loginBtnMargin {
   margin-top: 70px !important;
