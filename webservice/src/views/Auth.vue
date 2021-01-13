@@ -1,26 +1,34 @@
 <template>
   <div class="main">
-    <form>
-      <button id="switch_to_login">Or login</button>
+    <form :class="{loginFormHeight: !signUpForm}">
+      <button id="switch_to_login"
+      @click.prevent="toggleFormType()">
+        {{
+          signUpForm ? "Or login" : "Or sign up"
+        }}
+      </button>
       <p id="moto3">find people alike.</p>
       <p id="moto4">be yourself.</p>
       <transition name="slide-fade">
       <div id="center" v-if="mounted">
-        <p>Create a new account</p>
-        <p>Join Sproutt and find new people alike!</p>
-        <input type="text" placeholder="Your first name" ref="fname">
+        <p>{{ 
+          signUpForm ? "Create a new account" : "Login to your account"
+          }}</p>
+        <p v-show="signUpForm">Join Sproutt and find new people alike!</p>
+        <input v-show="signUpForm" type="text" placeholder="Your first name" ref="fname">
         <input type="text" placeholder="Your email or phone number"
         @focus="showForm = true">
         <transition name="slide-fade">
-          <input v-if="showForm" type="text" placeholder="Confirm email/phone number">
+          <input v-if="showForm && signUpForm" type="text" placeholder="Confirm email/phone number">
         </transition>
-        <input type="text" placeholder="Secure password">
+        <input type="text" :placeholder="passwordPlaceholder()">
         <p id="err_msg" v-if="showInfo" :class="{info_warning}">
           {{ curInfoMessage }}
         </p>
-        <p id="terms">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
-        <button type="submit" @click.prevent>
-          Create your Sproutt account
+        <p id="terms" v-if="signUpForm">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
+        <button type="submit" @click.prevent
+        :class="{loginBtnMargin: !signUpForm}">
+          {{ signUpForm ? "Create your Sproutt account" : "Login" }}
         </button>
         <!-- <p id="reset_password">Forgot your password?</p> -->
       </div>
@@ -76,6 +84,8 @@ import infoMessages from '@/js_files/info_messages.json'
 export default {
   data() {
     return {
+      info_warning: false,
+      signUpForm: true,
       showInfo: true,
       mounted: false,
       showForm: false,
@@ -98,6 +108,12 @@ export default {
   methods: {
     checkForErrors() {
         
+    },
+    toggleFormType() {
+      this.signUpForm = !this.signUpForm
+    },
+    passwordPlaceholder() {
+      return this.signUpForm ? 'Secure password' : 'Your password'
     }
   },
   mounted() {
@@ -117,6 +133,14 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/mixins/unselectable';
 @import '@/assets/mixins/centerX';
+
+.loginBtnMargin {
+  margin-top: 70px !important;
+}
+
+.loginFormHeight {
+  height: 320px !important;
+}
 
 #license {
   #copyright {
@@ -391,7 +415,7 @@ p {
   background: linear-gradient(270deg, rgb(56, 212, 69) 0%, rgb(111, 245, 122) 100%);
 }
 
-#info_warning {
+.info_warning {
   background: rgb(209, 90, 21);
   background: linear-gradient(270deg, rgb(223, 114, 64) 0%, rgb(219, 62, 34) 100%);
 }
