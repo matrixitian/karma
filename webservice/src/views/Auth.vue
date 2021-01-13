@@ -30,7 +30,12 @@
         <input type="text" :placeholder="passwordPlaceholder()" v-model="password"
         @keyup="updatePasswordMeter()">
         <div v-show="password" id="password_strength">
-          <p>Password is <span>{{ passwordStrength }}</span></p>
+          <p>Password is <span 
+          :class="{
+            ps_red: passwordStrength === 'Weak',
+            ps_yellow: passwordStrength === 'Medium',
+            ps_green: passwordStrength === 'Strong'}">
+          {{ passwordStrength }}</span></p>
         </div>
         <p id="err_msg" v-if="showInfo" :class="{info_warning: errorOccured}">
           {{ curInfoMessage }}
@@ -107,8 +112,8 @@ export default {
       signUpFormText: null,
       loginFormText: null,
       signUpForm: true,
-      errorOccured: false,
-      showInfo: true,
+      errorOccured: false, // only for red class adding
+      showInfo: false,
       mounted: false,
       showForm: false,
       curInfoMessage: null,
@@ -225,15 +230,21 @@ export default {
 @import '@/assets/mixins/unselectable';
 @import '@/assets/mixins/centerX';
 
+.ps_red { background-color: red !important; }
+.ps_yellow { background-color: yellow !important; }
+.ps_green { background-color: greenyellow !important; }
+
 #password_strength {
   margin: auto;
   margin-top: -10px;
-  // background-color: red;
   text-align: center;
   p {
     font-size: 14px !important;
     span {
-      background-color: red;
+      font-size: 13px;
+      padding: 4px;
+      border-radius: 5px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
   }
 }
