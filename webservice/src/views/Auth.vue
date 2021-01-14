@@ -41,9 +41,11 @@
             ps_green: passwordStrength === 'Strong'}">
           {{ passwordStrength }}</span></p>
         </div>
-        <p id="err_msg" v-if="showInfo" :class="{info_warning: errorOccured}">
-          {{ curInfoMessage }}
-        </p>
+        <transition name="slide-fade">
+          <p id="err_msg" v-if="showInfo" :class="{info_warning: errorOccured}">
+            {{ curInfoMessage }}
+          </p>
+        </transition>
         <p id="terms" v-if="signUpForm">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
         <p v-show="!signUpForm" id="reset_password">Forgot your password?</p>
         <button type="submit" @click.prevent="authenticate()"
@@ -105,6 +107,8 @@ const passwordStrength = require('check-password-strength')
 export default {
   data() {
     return {
+      storedLang: null,
+      alreadySignedUp: null,
       passwordStrength: null,
       name: 'Fred',
       emailOrPhoneNum: 'holidayexplanation@gmail.com',
@@ -138,28 +142,20 @@ export default {
   },
   created() {
     // import translation
-    const storedLang = localStorage.getItem('lang')
-    const alreadySignedUp = localStorage.getItem('alreadySignedUp')
+    this.storedLang = localStorage.getItem('lang')
+    this.alreadySignedUp = localStorage.getItem('alreadySignedUp')
 
-    console.log(storedLang)
+    console.log(this.storedLang)
 
-    if (storedLang !== 'undefined' && storedLang !== 'null'
-    && storedLang !== undefined && storedLang !== null) {
-      this.pageText = require(`@/assets/translations/page_text_${storedLang}.js`)
-
-      if (alreadySignedUp) {
-        this.loginFormText = require(`@/assets/translations/login_form_text_${storedLang}.js`)
-      } else {
-        this.signUpFormText = require(`@/assets/translations/signup_form_text_${storedLang}.js`)
-      }
+    if (this.storedLang !== 'undefined' && this.storedLang !== 'null'
+    && this.storedLang !== undefined && this.storedLang !== null) {
+      this.pageText = require(`@/assets/translations/page_text_${this.storedLang}.js`)
+      this.loginFormText = require(`@/assets/translations/login_form_text_${this.storedLang}.js`)
+      this.signUpFormText = require(`@/assets/translations/signup_form_text_${this.storedLang}.js`)
     } else {
       this.pageText = require('@/assets/translations/page_text_english.js')
-
-      if (alreadySignedUp) {
-        this.loginFormText = require('@/assets/translations/login_form_text_english.js')
-      } else {
-        this.signUpFormText = require('@/assets/translations/signup_form_text_english.js')
-      }
+      this.loginFormText = require('@/assets/translations/login_form_text_english.js')
+      this.signUpFormText = require('@/assets/translations/signup_form_text_english.js')
     }
   },
   methods: {
@@ -222,6 +218,15 @@ export default {
             if (res.data === 11000) {
               this.curInfoMessage = this.signUpFormText.data.emailOrPhoneNumTaken
               this.createErrorMessage('E-mail or phone number already taken.')
+            } else {
+              localStorage.setItem('token', res.data.token)
+              this.errorOccured = false
+              this.showInfo = true
+              this.curInfoMessage = this.signUpFormText.data.successRedirecting
+              
+              setTimeout(() => {
+                this.$router.push({ name: 'Fillout' });
+              }, 1000)
             }
           })
         } else {
@@ -234,13 +239,18 @@ export default {
               password: this.password
             }
           }).then((res) => {
-            console.log(res)
+            if (res.status === 200) {
+              this.showInfo = true
+              this.curInfoMessage = this.loginFormText.data.loginSuccesful
+              this.$router.push({ name: 'Home' });
+            }
           })
         }
       
     },
     toggleFormType() {
       this.showInfo = false
+
       this.signUpForm = !this.signUpForm
     },
     passwordPlaceholder() {
@@ -307,7 +317,7 @@ select#lang_selector {
 }
 
 .loginBtnMargin {
-  margin-top: 40px !important;
+  margin-top: 10px !important;
 }
 
 .loginFormHeight {

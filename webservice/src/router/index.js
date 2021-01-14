@@ -8,9 +8,14 @@ const routes = [
     component: Home
   },
   {
+    path: '/fillout',
+    name: 'Fillout',
+    component: () => import(/* webpackChunkName: "forms" */ '../views/Fillout.vue')
+  },
+  {
     path: '/auth',
     name: 'Auth',
-    component: () => import('../views/Auth.vue')
+    component: () => import(/* webpackChunkName: "forms" */ '../views/Auth.vue')
   }
 ]
 
