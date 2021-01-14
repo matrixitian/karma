@@ -167,37 +167,36 @@ export default {
     },
     authenticate() {
 
+        function createErrorMessage(msg) {
+          this.errorOccured = true
+          this.showInfo = true
+          throw new Error(msg)
+        }
+
         if (this.signUpForm) {
           if (this.emailOrPhoneNum !== this.cEmailOrPhoneNum) {
-            this.errorOccured = true
             this.curInfoMessage = this.signUpFormText.data.fieldsDontMatch
-            throw new Error('E-mail/Phone number.')
+            createErrorMessage('E-mail/Phone number.')
           }
 
           const format = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/
           const containsSymbol = format.test(this.password)
 
           if (!this.password) {
-            this.errorOccured = true
-            this.showInfo = true
             this.curInfoMessage = this.signUpFormText.data.password
-            throw new Error('Password.')
+            createErrorMessage('Password field is empty.')
           }
 
           const passwordLen = this.password.length
 
           if (!containsSymbol || passwordLen < 8) {
-            this.errorOccured = true
-            this.showInfo = true
-            this.$forceUpdate()
             this.curInfoMessage = this.signUpFormText.data.password
-            throw new Error('Password.')
+            createErrorMessage('Password not secure.')
           }
 
           if (!window.navigator.onLine) {
-            this.errorOccured = true
             this.curInfoMessage = this.signUpFormText.data.noConnection
-            throw new Error('Client is offline.')
+            createErrorMessage('Client is offline.')
           }
 
           axios({
