@@ -21,22 +21,18 @@
         <p v-show="signUpForm">Join Sproutt and find new people alike!</p>
         <input v-show="signUpForm" type="text" placeholder="Your first name" ref="fname"
         v-model="name"
-        @focus="setFocusedVars('name')"
-        @blur="setUnfocusedVars('name')">
+        @keyup="hideShowInfo">
         <input type="text" placeholder="Your email or phone number"
         v-model="emailOrPhoneNum"
-        @focus="setFocusedVars('email')"
-        @blur="setUnfocusedVars('email')">
+        @focus="showForm = true"
+        @keyup="hideShowInfo">
         <transition name="slide-fade">
           <input v-if="showForm && signUpForm" type="text" placeholder="Confirm email/phone number"
           v-model="cEmailOrPhoneNum"
-          @focus="setFocusedVars('cEmail')"
-          @blur="setUnfocusedVars('cEmail')">
+          @keyup="hideShowInfo">
         </transition>
         <input type="text" :placeholder="passwordPlaceholder()" v-model="password"
-        @keyup="updatePasswordMeter()"
-        @focus="setFocusedVars('password')"
-        @blur="setUnfocusedVars('password')">
+        @keyup="updatePasswordMeter()">
         <div v-if="password && signUpForm && !showInfo" id="password_strength">
           <p>Password is <span 
           :class="{
@@ -108,10 +104,6 @@ const passwordStrength = require('check-password-strength')
 export default {
   data() {
     return {
-      nameFieldFocused: true,
-      emailFieldFocused: false,
-      cEmailFieldFocused: false,
-      passwordFieldFocused: false,
       passwordStrength: null,
       name: 'Fred',
       emailOrPhoneNum: 'holidayexplanation@gmail.com',
@@ -170,40 +162,13 @@ export default {
     }
   },
   methods: {
-    setFocusedVars(field) {
-      switch (field) {
-        case 'name':
-          this.nameFieldFocused = true
-          break;
-        case 'email':
-          this.emailFieldFocused = true
-          this.showForm = true
-          break;
-        case 'cEmail':
-          this.cEmailFieldFocused = true
-          break;
-        case 'password':
-          this.passwordFieldFocused = true
-          break;
-      }
-    },
-    setUnfocusedVars(field) {
-      switch (field) {
-        case 'name':
-          this.nameFieldFocused = false
-          break;
-        case 'email':
-          this.cEmailFieldFocused = false
-          break;
-        case 'cEmail':
-          this.emailFieldFocused = false
-          break;
-        case 'password':
-          this.passwordFieldFocused = false
-          break;
-      }
+    hideShowInfo() {
+      this.showInfo = false
     },
     updatePasswordMeter() {
+      // removes info message on keyup too
+      this.showInfo = false
+
       if (this.password) {
         this.passwordStrength = passwordStrength(this.password).value
       } else {
@@ -600,10 +565,7 @@ p {
 }
 
 #err_msg {
-  // left: 50%;
-  // transform: translateX(-50%);
-  width: calc(70% - 20px);
-  // position: absolute;
+  width: calc(100% - 23px);
   color: white;
   margin-top: 10px;
   font-weight: bold;
