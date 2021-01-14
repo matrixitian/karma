@@ -24,26 +24,24 @@ export default {
 #main {
     height: 100vh;
     width: 100vw;
-    background-color: black !important;
+    background: rgb(6,8,98);
+    background: linear-gradient(180deg, rgb(90, 11, 255) 0%, rgb(254, 103, 203) 100%);
 }
 
 $headerHeight: 70px;
-$footerHeight: 50px;
+$footerHeight: 120px;
 
 #Header {
     height: $headerHeight;
-    background-color: red;
 }
 
 #container {
     height: calc(100% - #{$headerHeight} - #{$footerHeight});
-    background-color: green;
 }
 
 #Footer {
     bottom: 0;
     height: $footerHeight;
     width: 100%;
-    background-color: blue !important;
 }
 </style>

@@ -29,19 +29,31 @@ export default {
   margin: auto;
   height: 100%;
   width: 400px;
-  background-color: yellow;
 }
 
 button {
-  // position: absolute;
-  margin: auto;
+  font-family: 'Quicksand';
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid white;
+  border-radius: 10px;
+  background-color: transparent;
+  color: white;
+  font-size: 15px;
+  padding: 7px 20px 7px 20px;
+  &:hover {
+    transition: .2s ease;
+    padding: 8px 21px 8px 21px;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: black;
+  }
 }
 
 #last, #next {
   position: absolute;
   width: 25%;
   height: 100%;
-  background-color: hotpink;
 }
 
 #last {
@@ -54,18 +66,22 @@ button {
 
 ul {
   position: absolute;
-  background-color: red;
   margin: 0;
   padding: 0;
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
   li {
+    border: 1px solid rgba(0, 0, 0, 0.2);
     margin-left: 5px;
     float: left;
-    height: 15px;
-    width: 15px;
+    height: 17px;
+    width: 17px;
     border-radius: 100%;
-    background-color: greenyellow;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  li:nth-child(1) {
+    border-color: transparent;
+    background-color: rgba(255, 255, 255, 0.9);
   }
 }
 </style>

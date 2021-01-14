@@ -28,6 +28,7 @@ select {
 input, button {
   font-family: 'Quicksand';
   font-weight: bold;
+  outline: none;
 }
 
 p {
