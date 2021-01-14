@@ -47,6 +47,7 @@
         <p id="terms" v-if="signUpForm">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
         <p v-show="!signUpForm" id="reset_password">Forgot your password?</p>
         <button type="submit" @click.prevent="authenticate()"
+        id="formButton"
         :class="{loginBtnMargin: !signUpForm}">
           {{ signUpForm ? "Create your Sproutt account" : "Login" }}
         </button>
@@ -234,10 +235,8 @@ export default {
         }
       
     },
-    checkForErrors() {
-        
-    },
     toggleFormType() {
+      this.showInfo = false
       this.signUpForm = !this.signUpForm
     },
     passwordPlaceholder() {
@@ -512,7 +511,9 @@ form {
       padding: 10px 0 10px 10px;
     }
     p#terms {
-      padding-top: 20px;
+      width: 100%;
+      margin: auto;
+      margin-top: 20px;
       font-size: 14px;
     } 
     a {
@@ -523,14 +524,15 @@ form {
         color: rgb(56, 149, 211);
       }
     }
-    button {
+    button#formButton {
+      margin: auto;
+      margin-top: 15px;
+      width: 100%;
       border-radius: 9px;
       background: rgb(6,8,98);
       background: linear-gradient(340deg, rgb(90, 11, 126) 0%, rgba(181,0,255,1) 100%);
       color: white;
-      font-size: 15px;;
-      margin-top: 15px;
-      width: 100%;
+      font-size: 15px;
       padding: 10px 0 10px 0;
       border: 2px solid white;
       outline: none;
