@@ -20,16 +20,24 @@
         <p>{{ signUpForm ? "Create a new account" : "Login to your account" }}</p>
         <p v-show="signUpForm">Join Sproutt and find new people alike!</p>
         <input v-show="signUpForm" type="text" placeholder="Your first name" ref="fname"
-        v-model="name">
+        v-model="name"
+        @focus="setFocusedVars('name')"
+        @blur="setUnfocusedVars('name')">
         <input type="text" placeholder="Your email or phone number"
-        @focus="showForm = true" v-model="emailOrPhoneNum">
+        v-model="emailOrPhoneNum"
+        @focus="setFocusedVars('email')"
+        @blur="setUnfocusedVars('email')">
         <transition name="slide-fade">
           <input v-if="showForm && signUpForm" type="text" placeholder="Confirm email/phone number"
-          v-model="cEmailOrPhoneNum">
+          v-model="cEmailOrPhoneNum"
+          @focus="setFocusedVars('cEmail')"
+          @blur="setUnfocusedVars('cEmail')">
         </transition>
         <input type="text" :placeholder="passwordPlaceholder()" v-model="password"
-        @keyup="updatePasswordMeter()">
-        <div v-show="password" id="password_strength">
+        @keyup="updatePasswordMeter()"
+        @focus="setFocusedVars('password')"
+        @blur="setUnfocusedVars('password')">
+        <div v-if="password && signUpForm && !showInfo" id="password_strength">
           <p>Password is <span 
           :class="{
             ps_red: passwordStrength === 'Weak',
@@ -100,6 +108,10 @@ const passwordStrength = require('check-password-strength')
 export default {
   data() {
     return {
+      nameFieldFocused: true,
+      emailFieldFocused: false,
+      cEmailFieldFocused: false,
+      passwordFieldFocused: false,
       passwordStrength: null,
       name: 'Fred',
       emailOrPhoneNum: 'holidayexplanation@gmail.com',
@@ -158,6 +170,39 @@ export default {
     }
   },
   methods: {
+    setFocusedVars(field) {
+      switch (field) {
+        case 'name':
+          this.nameFieldFocused = true
+          break;
+        case 'email':
+          this.emailFieldFocused = true
+          this.showForm = true
+          break;
+        case 'cEmail':
+          this.cEmailFieldFocused = true
+          break;
+        case 'password':
+          this.passwordFieldFocused = true
+          break;
+      }
+    },
+    setUnfocusedVars(field) {
+      switch (field) {
+        case 'name':
+          this.nameFieldFocused = false
+          break;
+        case 'email':
+          this.cEmailFieldFocused = false
+          break;
+        case 'cEmail':
+          this.emailFieldFocused = false
+          break;
+        case 'password':
+          this.passwordFieldFocused = false
+          break;
+      }
+    },
     updatePasswordMeter() {
       if (this.password) {
         this.passwordStrength = passwordStrength(this.password).value
@@ -165,18 +210,17 @@ export default {
         this.passwordStrength = null
       }
     },
+    createErrorMessage(msg) {
+      this.errorOccured = true
+      this.showInfo = true
+      throw new Error(msg)
+    },
     authenticate() {
-
-        function createErrorMessage(msg) {
-          this.errorOccured = true
-          this.showInfo = true
-          throw new Error(msg)
-        }
 
         if (this.signUpForm) {
           if (this.emailOrPhoneNum !== this.cEmailOrPhoneNum) {
             this.curInfoMessage = this.signUpFormText.data.fieldsDontMatch
-            createErrorMessage('E-mail/Phone number.')
+            this.createErrorMessage('E-mail/Phone number.')
           }
 
           const format = /[ `!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/
@@ -184,19 +228,19 @@ export default {
 
           if (!this.password) {
             this.curInfoMessage = this.signUpFormText.data.password
-            createErrorMessage('Password field is empty.')
+            this.createErrorMessage('Password field is empty.')
           }
 
           const passwordLen = this.password.length
 
           if (!containsSymbol || passwordLen < 8) {
             this.curInfoMessage = this.signUpFormText.data.password
-            createErrorMessage('Password not secure.')
+            this.createErrorMessage('Password not secure.')
           }
 
           if (!window.navigator.onLine) {
             this.curInfoMessage = this.signUpFormText.data.noConnection
-            createErrorMessage('Client is offline.')
+            this.createErrorMessage('Client is offline.')
           }
 
           axios({
@@ -204,14 +248,24 @@ export default {
             url: 'http://localhost:3000/create-user',
             data: {
               name: this.name,
-              email: this.emailOrPhoneNum,
+              emailOrPhoneNum: this.emailOrPhoneNum,
               password: this.password
             }
           }).then((res) => {
             console.log(res)
           })
         } else {
-          console.log('login')
+          axios({
+            method: 'post',
+            url: 'http://localhost:3000/login',
+            data: {
+              name: this.name,
+              emailOrPhoneNum: this.emailOrPhoneNum,
+              password: this.password
+            }
+          }).then((res) => {
+            console.log(res)
+          })
         }
       
     },
@@ -233,6 +287,8 @@ export default {
     setTimeout(() => {
       this.$refs.fname.focus()
     }, 100)
+
+    
   },
   computed: {
     
@@ -491,7 +547,7 @@ form {
       padding: 10px 0 10px 10px;
     }
     p#terms {
-      padding-top: 60px;
+      padding-top: 20px;
       font-size: 14px;
     } 
     a {
@@ -544,10 +600,10 @@ p {
 }
 
 #err_msg {
-  left: 50%;
-  transform: translateX(-50%);
+  // left: 50%;
+  // transform: translateX(-50%);
   width: calc(70% - 20px);
-  position: absolute;
+  // position: absolute;
   color: white;
   margin-top: 10px;
   font-weight: bold;

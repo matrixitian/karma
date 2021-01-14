@@ -7,11 +7,12 @@ const log = console.log
 router.post('/login', async (req, res) => {
     log(req.body)
     try {
-        const user = await User.findByCredentials(req.body.username, req.body.password)
+        const user = await User.findByCredentials(req.body.emailOrPhoneNum, req.body.password)
         const token = await user.generateAuthToken()
         res.status(200).send({ user, token })
     } catch(err) {
-        res.status(400).send("error") 
+        console.log(err)
+        res.status(400).send(err) 
     }
 })
 

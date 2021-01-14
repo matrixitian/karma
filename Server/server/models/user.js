@@ -16,13 +16,14 @@ const userSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    email: {
+    emailOrPhoneNum: {
         type: String,
         trim: true,
-        required: false,
+        required: true,
         validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('Email is invalid.')
+            if (!validator.isEmail(value) &&
+            !validator.isMobilePhone(value)) {
+                throw new Error('Email or phone number is invalid.')
             }
         } 
     },
@@ -65,8 +66,8 @@ userSchema.methods.generateAuthToken = async function() {
 }
 
 // define findByCredentials func
-userSchema.statics.findByCredentials = async (username, password) => {
-    const user = await User.findOne({ username })
+userSchema.statics.findByCredentials = async (emailOrPhoneNum, password) => {
+    const user = await User.findOne({ emailOrPhoneNum })
 
     let isMatch
     if (!user) {
