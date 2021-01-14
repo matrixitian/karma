@@ -109,7 +109,7 @@ export default {
       name: 'Fred',
       emailOrPhoneNum: 'holidayexplanation@gmail.com',
       cEmailOrPhoneNum: 'holidayexplanation@gmail.com',
-      password: null,
+      password: '!!Winter99!!',
       langs: [
         'english', 'deutsch', 'hrvatski'
       ],
@@ -218,7 +218,11 @@ export default {
               password: this.password
             }
           }).then((res) => {
-            console.log(res)
+            console.log(res.data)
+            if (res.data === 11000) {
+              this.curInfoMessage = this.signUpFormText.data.emailOrPhoneNumTaken
+              this.createErrorMessage('E-mail or phone number already taken.')
+            }
           })
         } else {
           axios({

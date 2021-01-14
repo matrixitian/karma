@@ -22,8 +22,9 @@ router.post('/create-user', async (req, res) => {
             
         return res.status(201).send({ savedUserAccount, token })
     } catch(err) {
-        log(err)
-        return res.status(400).send(err)
+        log(err.code)
+
+        return res.send(err.code.toString())
     }
 })
 

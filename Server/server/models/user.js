@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: true,
+        unique: true,
         validate(value) {
             if (!validator.isEmail(value) &&
             !validator.isMobilePhone(value)) {
