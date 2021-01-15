@@ -6,7 +6,8 @@
       </div>
       <div id="dots">
         <ul>
-          <li v-for="num in 6" :key="num"></li>
+          <li v-for="num in 6" :key="num"
+          :class="{active: num <= curPage}"></li>
         </ul>
       </div>
       <div id="next" v-if="pageDataIsValid">
@@ -105,9 +106,10 @@ ul {
     border-radius: 100%;
     background-color: rgba(0, 0, 0, 0.2);
   }
-  li:nth-child(1) {
-    border-color: white;
-    background-color: rgba(255, 255, 255, 0.9);
-  }
+}
+
+.active {
+  border-color: white;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 </style>
