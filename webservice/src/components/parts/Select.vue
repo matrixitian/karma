@@ -3,12 +3,13 @@
   <div id="search">
     <div id="input">
         <input type="text" placeholder="Job Titel"
-        v-model="selected"
+        v-model="searchValue"
         @focus="showList()"
         @keyup="query()">
     </div>
     <div id="icons">
-      <img id="close" src="@/assets/icons/x.svg" alt="">
+      <img id="close" src="@/assets/icons/x.svg" alt=""
+      @click="clearSearch()">
       <img id="toggle" src="@/assets/icons/arrow.svg" alt=""
       :class="{listOpen: listVisible}"
       @click="toggleList()">
@@ -16,9 +17,9 @@
   </div>
   <div id="list" v-show="listVisible">
     <ul>
-        <li v-for="(item, i) in list" :key="i"
-        @click="selectItem(item)">
-          <p>{{ item }}</p>
+        <li v-for="(jobTitle, i) in activeList" :key="i"
+        @click="selectItem(jobTitle)">
+          <p>{{ jobTitle }}</p>
         </li>
     </ul>
   </div>
@@ -32,17 +33,25 @@ export default {
   data() {
     return {
       listVisible: false,
-      selected: null
+      searchValue: null,
+      activeList: null
     }
   },
+  mounted() {
+    this.activeList = this.list
+  },
   methods: {
+    clearSearch() {
+      this.searchValue = null
+      this.activeList = this.list
+    },
     query() {
       const z = this
       const filtered = z.list.filter(function(tag) {
-        return tag.toLowerCase().indexOf(z.selected.toLowerCase()) >= 0;
+        return tag.toLowerCase().indexOf(z.searchValue.toLowerCase()) >= 0;
       })
 
-      console.log(filtered)
+      this.activeList = filtered
     },
     toggleList() {
       this.listVisible = !this.listVisible
@@ -54,7 +63,7 @@ export default {
       this.listVisible = false
     },
     selectItem(item) {
-      this.selected = item
+      this.searchValue = item
 
       this.hideList()
     }
