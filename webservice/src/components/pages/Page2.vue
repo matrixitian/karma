@@ -1,12 +1,26 @@
 <template>
   <div id="pageTwo">
-      <div id="job">
-          <div id="job_centerer">
-            <div id="job_sentence">
+      <div class="job">
+          <div class="job_centerer">
+            <div class="job_sentence">
               <p>Ich bin beruflich...</p>
             </div>
-            <div id="job_selector">
+            <div class="job_selector">
                 <Select :list="['MIT', 'Hardvard', 'Oxford']" />
+            </div>
+          </div>
+      </div>
+
+      <div class="job">
+          <div class="job_centerer">
+            <div class="job_sentence">
+              <p>Ich habe...</p>
+            </div>
+            <div class="job_selector">
+                <Select :list="['MIT', 'Hardvard', 'Oxford']" />
+            </div>
+            <div class="job_sentence2">
+              <p>Kinder</p>
             </div>
           </div>
       </div>
@@ -26,19 +40,19 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/mixins/centerY';
 
-#job {
+.job {
     width: 100%;
     height: 100px;
     background-color: yellow;
 }
 
-#job_centerer {
+.job_centerer {
     position: relative;
     width: 500px;
     height: 100%;
     margin: auto;
     background-color: green;
-    #job_sentence {
+    .job_sentence {
         @include centerY;
         left: 0;
         p {
@@ -47,7 +61,7 @@ export default {
             font-weight: bold;
         }
     }
-    #job_selector {
+    .job_selector {
         @include centerY;
         right: 0;
     }
