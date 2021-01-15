@@ -102,11 +102,17 @@ export default {
       genders: ['Man', 'Woman'],
       gendersIds: ['Straight', 'Bi', 'Gay', 'Lesbian', 'Trans', 'Non-binary'],
       selGender: null,
-      selGenderId: [true, false, false, false, false, false]
+      selGenderId: [true, false, false, false, false, false],
+      birthDateIsValid: false,
+      userAge: null
     }
   },
   mounted() {
     this.$refs[1].focus()
+
+    setInterval(() => {
+      this.checkBirthdayValidity()
+    }, 200)
   },
   methods: {
     checkBirthdayValidity() {
@@ -117,10 +123,14 @@ export default {
 
       const birthDate = `${birthMonth}-${birthDay}-${birthYear}`
       
-      const dateIsValid = validateDate(birthDate)
-      const userAge = getAge(birthDate)
+      this.birthDateIsValid = validateDate(birthDate)
+      this.userAge = getAge(birthDate)
 
-      console.log(dateIsValid, userAge)
+      if (this.birthDateIsValid && this.userAge
+      && this.selGender && this.selGenderId.includes(true)) {
+        console.log('Paga data is valid.')
+        this.$store.commit('setPageDataValid')
+      }
     },
     isGenderSel(i) {
       const gender = this.selGender

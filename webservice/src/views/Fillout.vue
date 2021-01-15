@@ -16,6 +16,14 @@ import Footer from '@/components/Footer'
 import * as Pages from '@/components/pages'
 
 export default {
+    created() {
+        this.$store.subscribe(async(mutation) => {
+            if (mutation.type === 'requestNextPage') {
+                this.currentPage++
+                this.switchPage()
+            }
+        })
+    },
     components: {
         Header, Footer, ...Pages
     },
@@ -23,6 +31,11 @@ export default {
         return {
             currentPage: 1,
             mainComponent: 'Page1'
+        }
+    },
+    methods: {
+        switchPage() {
+            this.mainComponent = `Page${this.currentPage}`
         }
     }
 }

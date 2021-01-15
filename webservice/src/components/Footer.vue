@@ -9,8 +9,8 @@
           <li v-for="num in 6" :key="num"></li>
         </ul>
       </div>
-      <div id="next">
-        <button @submit.prevent>Next</button>
+      <div id="next" v-if="pageDataIsValid">
+        <button @submit.prevent="requestNextPage()">Next</button>
       </div>
     </div>
   </div>
@@ -19,8 +19,28 @@
 <script>
 export default {
   props: ['curPage'],
+  data() {
+    return {
+      pageDataIsValid: false
+    }
+  },
   methods: {
-    nextPage() {}
+    requestNextPage() {
+      this.$store.commit('requestNextPage')
+    }
+  },
+  created() {
+     this.$store.subscribe(async(mutation, state) => {
+      if (mutation.type === 'setPageDataValid') {
+          if (state.pageDataIsValid) {
+            this.pageDataIsValid = true
+          }
+      }
+
+      if (mutation.type === 'resetPageDataIsValid') {
+          this.pageDataIsValid = false
+      }
+    })
   }
 }
 </script>
