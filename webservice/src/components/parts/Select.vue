@@ -139,6 +139,8 @@ input {
 }
 
 ul {
+  position: absolute;
+  width: 100%;
   margin: auto;
   margin: 0;
   background-color: white;
