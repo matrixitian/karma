@@ -3,20 +3,20 @@
   @click="checkDataValidity()"
   @keyup="checkDataValidity()">
     <div id="sentence">
-      <p>Jetzt brauchen wir nur ein paar Daten!</p>
+      <p>{{ firstSentence }}</p>
     </div>
 
     <div id="birthday">
       <div id="day">
         <div class="upper">
-          <p>Day</p>
+          <p>{{ day }}</p>
         </div>
         <div class="lower">
-          <input type="text" ref="1" placeholder="D"
+          <input type="text" ref="1" :placeholder="d"
           @keyup="nextOrPreviousField($event, 1)"
           v-model="birthDay[0]"
           maxlength="1">
-          <input type="text" ref="2" placeholder="D"
+          <input type="text" ref="2" :placeholder="d"
           @keyup="nextOrPreviousField($event, 2)"
           v-model="birthDay[1]"
           maxlength="1">
@@ -24,14 +24,14 @@
       </div>
       <div id="month">
         <div class="upper">
-          <p>Month</p>
+          <p>{{ month }}</p>
         </div>
         <div class="lower">
-          <input type="text" ref="3" placeholder="M"
+          <input type="text" ref="3" :placeholder="m"
           @keyup="nextOrPreviousField($event, 3)"
           v-model="birthMonth[0]"
           maxlength="1">
-          <input type="text" ref="4" placeholder="M"
+          <input type="text" ref="4" :placeholder="m"
           @keyup="nextOrPreviousField($event, 4)"
           v-model="birthMonth[1]"
           maxlength="1">
@@ -39,22 +39,22 @@
       </div>
       <div id="year">
         <div class="upper">
-          <p>Year</p>
+          <p>{{ year }}</p>
         </div>
         <div class="lower">
-          <input type="text" ref="5" placeholder="Y"
+          <input type="text" ref="5" :placeholder="y"
           @keyup="nextOrPreviousField($event, 5)"
           v-model="birthYear[0]"
           maxlength="1">
-          <input type="text" ref="6" placeholder="Y"
+          <input type="text" ref="6" :placeholder="y"
           @keyup="nextOrPreviousField($event, 6)"
           v-model="birthYear[1]"
           maxlength="1">
-          <input type="text" ref="7" placeholder="Y"
+          <input type="text" ref="7" :placeholder="y"
           @keyup="nextOrPreviousField($event, 7)"
           v-model="birthYear[2]"
           maxlength="1">
-          <input type="text" ref="8" placeholder="Y"
+          <input type="text" ref="8" :placeholder="y"
           @keyup="nextOrPreviousField($event, 8)"
           v-model="birthYear[3]"
           maxlength="1">
@@ -64,7 +64,7 @@
 
     <div id="identification">
       <div class="id_sentence">
-        <p>Wie identifizierst du dich?</p>
+        <p>{{ secondSentence }}</p>
       </div>
       <div id="gender">
         <ul>
@@ -76,7 +76,7 @@
         </ul>
       </div>
       <div class="id_sentence" id="lower_line">
-        <p>What are you looking for?</p>
+        <p>{{ thirdSentence }}</p>
       </div>
       <div id="gender_orientation">
         <ul>
@@ -110,8 +110,39 @@ export default {
       selrelationshipType: [false, true, false, false, false],
       birthDateIsValid: false,
       userAge: null,
-      curPage: 1
+      // translation
+      firstSentence: null,
+      secondSentence: null,
+      thirdSentence: null,
+      day: null,
+      month: null,
+      year: null,
+      d: null,
+      m: null,
+      y: null
     }
+  },
+  created() {
+    // Import translation
+    let lang = localStorage.getItem('lang')
+    if (!lang) lang = 'english'
+
+    const translation = require(`@/assets/translations/page_1_${lang}.js`)
+
+    this.genders = translation.data.genders
+    this.relationshipTypes = translation.data.relationshipTypes
+
+    this.firstSentence = translation.data.firstSentence
+    this.secondSentence = translation.data.secondSentence
+    this.thirdSentence = translation.data.thirdSentence
+
+    this.day = translation.data.day
+    this.month = translation.data.month
+    this.year = translation.data.year
+
+    this.d = translation.data.d
+    this.m = translation.data.m
+    this.y = translation.data.y
   },
   mounted() {
     this.$refs[1].focus()

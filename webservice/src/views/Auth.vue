@@ -145,18 +145,15 @@ export default {
     this.storedLang = localStorage.getItem('lang')
     this.alreadySignedUp = localStorage.getItem('alreadySignedUp')
 
-    console.log(this.storedLang)
-
     if (this.storedLang !== 'undefined' && this.storedLang !== 'null'
     && this.storedLang !== undefined && this.storedLang !== null) {
-      this.pageText = require(`@/assets/translations/page_text_${this.storedLang}.js`)
-      this.loginFormText = require(`@/assets/translations/login_form_text_${this.storedLang}.js`)
-      this.signUpFormText = require(`@/assets/translations/signup_form_text_${this.storedLang}.js`)
-    } else {
-      this.pageText = require('@/assets/translations/page_text_english.js')
-      this.loginFormText = require('@/assets/translations/login_form_text_english.js')
-      this.signUpFormText = require('@/assets/translations/signup_form_text_english.js')
+      localStorage.setItem('lang', 'english')
+      this.storedLang = 'english'
     }
+
+    this.pageText = require(`@/assets/translations/page_text_${this.storedLang}.js`)
+    this.loginFormText = require(`@/assets/translations/login_form_text_${this.storedLang}.js`)
+    this.signUpFormText = require(`@/assets/translations/signup_form_text_${this.storedLang}.js`)
   },
   methods: {
     hideShowInfo() {
@@ -264,12 +261,7 @@ export default {
     this.mounted = true
     setTimeout(() => {
       this.$refs.fname.focus()
-    }, 100)
-
-    
-  },
-  computed: {
-    
+    }, 100)  
   }
 }
 </script>
