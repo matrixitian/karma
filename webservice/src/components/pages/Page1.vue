@@ -45,15 +45,35 @@
     </div>
 
     <div id="identification">
-      <div id="id_sentence">identify</div>
-      <div id="gender"></div>
-      <div id="gender_orientation"></div>
+      <div id="id_sentence">
+        <p>Wie identifizierst du dich?</p>
+      </div>
+      <div id="gender">
+        <ul>
+          <li v-for="gender in genders" :key="gender">
+            {{ gender }}
+          </li>
+        </ul>
+      </div>
+      <div id="gender_orientation">
+        <ul>
+          <li v-for="genderId in gendersIds" :key="genderId">
+            {{ genderId }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      genders: ['Man', 'Woman'],
+      gendersIds: ['Bi', 'Gay', 'Lesbian', 'Trans', 'Non-binary']
+    }
+  },
   mounted() {
     this.$refs[1].focus()
   },
@@ -116,11 +136,18 @@ export default {
     margin: 5px;
     border: none;
     outline: none;
-    border-bottom: 5px solid gray;
+    border-bottom: 5px solid rgb(44, 83, 189);
     height: 50px;
     width: 50px;
     display: inline;
     text-align: center;
+    background-color: transparent;
+    border-radius: 5px;
+    color: black;
+    font-size: 20px;
+    &::placeholder {
+      color: gray;
+    }
   }
 }
 
