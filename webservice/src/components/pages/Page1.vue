@@ -51,14 +51,14 @@
       <div id="gender">
         <ul>
           <li v-for="gender in genders" :key="gender">
-            {{ gender }}
+            <p>{{ gender }}</p>
           </li>
         </ul>
       </div>
       <div id="gender_orientation">
         <ul>
           <li v-for="genderId in gendersIds" :key="genderId">
-            {{ genderId }}
+            <p>{{ genderId }}</p>
           </li>
         </ul>
       </div>
@@ -110,8 +110,11 @@ export default {
       @include centerXY;
     }
   }
-  #gender {
-    height: calc(50% - 60px);
+  #gender_orientation {
+    border-top: 2px solid gray;
+  }
+  #gender, #gender_orientation {
+    height: 80px;
     width: 100%;
     background-color: blueviolet;
     text-align: center;
@@ -126,6 +129,8 @@ export default {
       display: flex;
       justify-content: center;
       li {
+        font-size: 20px;
+        font-weight: bold;
         display: inline;
         margin: auto;
         margin: 10px;
