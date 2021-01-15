@@ -129,6 +129,8 @@ export default {
       && this.selGender && this.selGenderId.includes(true)) {
         console.log('Paga data is valid.')
         this.$store.commit('setPageDataValid')
+      } else {
+        console.log('Paga data is not valid.')
       }
     },
     isGenderSel(i) {
