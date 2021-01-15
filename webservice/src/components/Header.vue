@@ -13,6 +13,6 @@ export default {
 <style scoped lang="scss">
 img {
     margin: 20px;
-    height: 50px;
+    height: 60px;
 }
 </style>

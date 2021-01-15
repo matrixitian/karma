@@ -80,7 +80,7 @@ ul {
     background-color: rgba(0, 0, 0, 0.2);
   }
   li:nth-child(1) {
-    border-color: transparent;
+    border-color: white;
     background-color: rgba(255, 255, 255, 0.9);
   }
 }
