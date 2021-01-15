@@ -10,9 +10,10 @@
           <p>Day</p>
         </div>
         <div class="lower">
-          <input type="number" ref="1" placeholder="D"
-          @keyup="nextField(2)">
-          <input type="number" ref="2" placeholder="D">
+          <input type="text" ref="1" placeholder="D"
+          @keyup="nextOrPreviousField($event, 1)">
+          <input type="text" ref="2" placeholder="D"
+          @keyup="nextOrPreviousField($event, 2)">
         </div>
       </div>
       <div id="month">
@@ -20,8 +21,10 @@
           <p>Month</p>
         </div>
         <div class="lower">
-          <input type="number" ref="3" placeholder="M">
-          <input type="number" ref="4" placeholder="M">
+          <input type="text" ref="3" placeholder="M"
+          @keyup="nextOrPreviousField($event, 3)">
+          <input type="text" ref="4" placeholder="M"
+          @keyup="nextOrPreviousField($event, 4)">
         </div>
       </div>
       <div id="year">
@@ -29,10 +32,14 @@
           <p>Year</p>
         </div>
         <div class="lower">
-          <input type="number" ref="5" placeholder="Y">
-          <input type="number" ref="6" placeholder="Y">
-          <input type="number" ref="7" placeholder="Y">
-          <input type="number" ref="8" placeholder="Y">
+          <input type="text" ref="5" placeholder="Y"
+          @keyup="nextOrPreviousField($event, 5)">
+          <input type="text" ref="6" placeholder="Y"
+          @keyup="nextOrPreviousField($event, 6)">
+          <input type="text" ref="7" placeholder="Y"
+          @keyup="nextOrPreviousField($event, 7)">
+          <input type="text" ref="8" placeholder="Y"
+          @keyup="nextOrPreviousField($event, 8)">
         </div>
       </div>
     </div>
@@ -49,6 +56,18 @@
 export default {
   mounted() {
     this.$refs[1].focus()
+  },
+  methods: {
+    nextOrPreviousField(e, refNum) {
+      console.log(e.keyCode)
+
+      if (e.keyCode === 8 && refNum > 1) {
+        this.$refs[refNum - 1].focus()
+        this.$refs[refNum - 1].select()
+      } else {
+        this.$refs[refNum + 1].focus()
+      }
+    }
   }
 }
 </script>
