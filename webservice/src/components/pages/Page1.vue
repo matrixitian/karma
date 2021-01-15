@@ -97,46 +97,52 @@ export default {
 @import '@/assets/mixins/centerX';
 
 #identification {
-  background-color: rgb(161, 115, 28);
   height: 60%;
   #id_sentence {
     margin: auto;
     position: relative;
     height: 60px;
     width: 500px;
-    border-top: 2px solid gray;
-    background-color: yellow;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
     p {
       @include centerXY;
+      color: white;
+      font-size: 20px;
     }
   }
   #gender_orientation {
-    border-top: 2px solid gray;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
   }
   #gender, #gender_orientation {
     height: 80px;
     width: 100%;
-    background-color: blueviolet;
     text-align: center;
     align-items: center;
     display: flex;
     justify-content: center;
     ul {
-      background-color: green;
       height: 100%;
       padding: 0;
       align-items: center;
       display: flex;
       justify-content: center;
       li {
-        font-size: 20px;
+        font-size: 17px;
         font-weight: bold;
         display: inline;
         margin: auto;
         margin: 10px;
         padding: 7px 20px 7px 20px;
         border-radius: 8px;
+        color: white;
+        border: 1px solid  rgba(255, 255, 255, 0.4);
         background-color: rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        &:hover {
+          transition: 0.2s ease;
+          transform: scale(1.05);
+          border: 1px solid white;
+        }
       }
     }
   }
@@ -146,13 +152,11 @@ export default {
   position: relative;
   height: 40%;
   width: 100%;
-  background-color: rgb(88, 75, 50);
   text-align: center;
   #day, #month, #year {
     display: inline-block;
     height: 100%;
     width: 150px;
-    background-color: red;
   }
    #year {
      width: 300px !important;
@@ -163,7 +167,6 @@ export default {
   position: relative;
   height: 60%;
   width: 100%;
-  background-color: rgb(50, 50, 110);
   p {
     @include centerX;
     bottom: 0;
@@ -184,7 +187,6 @@ export default {
     margin: 5px;
     border: none;
     outline: none;
-    border-bottom: 5px solid rgb(44, 83, 189);
     height: 50px;
     width: 50px;
     display: inline;
@@ -192,9 +194,9 @@ export default {
     background-color: transparent;
     border-radius: 5px;
     color: black;
-    font-size: 20px;
+    font-size: 26px;
     &::placeholder {
-      color: gray;
+      color: rgba(0, 0, 0, 0.4);
     }
   }
 }
@@ -203,14 +205,14 @@ export default {
   position: relative;
   height: 60px;
   width: 100%;
-  background-color: yellow;
   p {
     @include centerXY;
+    color: white;
+    font-size: 24px;
   }
 }
 
 #mainPageOne {
-  background-color: cadetblue;
   height: 100%;
   width: 100%;
 }

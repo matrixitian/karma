@@ -48,7 +48,7 @@ $footerHeight: 120px;
 
 #container {
     height: calc(100% - #{$headerHeight} - #{$footerHeight});
-    background-color: rgba(0, 0, 0, 0.4);
+    // background-color: rgba(0, 0, 0, 0.4);
 }
 
 #Footer {
