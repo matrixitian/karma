@@ -1,7 +1,7 @@
 <template>
   <div id="mainPageOne">
     <div id="sentence">
-      <p>Testing test sentence.</p>
+      <p>Jetzt brauchen wir nur ein paar Daten!</p>
     </div>
 
     <div id="birthday">
@@ -94,6 +94,48 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/mixins/centerXY';
+@import '@/assets/mixins/centerX';
+
+#identification {
+  background-color: rgb(161, 115, 28);
+  height: 60%;
+  #id_sentence {
+    margin: auto;
+    position: relative;
+    height: 60px;
+    width: 500px;
+    border-top: 2px solid gray;
+    background-color: yellow;
+    p {
+      @include centerXY;
+    }
+  }
+  #gender {
+    height: calc(50% - 60px);
+    width: 100%;
+    background-color: blueviolet;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    ul {
+      background-color: green;
+      height: 100%;
+      padding: 0;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      li {
+        display: inline;
+        margin: auto;
+        margin: 10px;
+        padding: 7px 20px 7px 20px;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+}
 
 #birthday {
   position: relative;
@@ -114,11 +156,12 @@ export default {
 
 .upper {
   position: relative;
-  height: 40%;
+  height: 60%;
   width: 100%;
   background-color: rgb(50, 50, 110);
   p {
-    @include centerXY;
+    @include centerX;
+    bottom: 0;
     color: white;
     font-weight: bold;
     font-size: 25px;
@@ -127,7 +170,7 @@ export default {
 
 .lower {
   position: relative;
-  height: 60%;
+  height: 40%;
   width: 100%;
   align-items: center;
   display: flex;
