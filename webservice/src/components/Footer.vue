@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="centerer">
-      <div id="last">
+      <div id="last" v-if="curPage !== 1">
         <button @submit.prevent>Back</button>
       </div>
       <div id="dots">
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-
+  props: ['curPage']
 }
 </script>
 

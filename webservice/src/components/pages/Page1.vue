@@ -11,9 +11,11 @@
         </div>
         <div class="lower">
           <input type="text" ref="1" placeholder="D"
-          @keyup="nextOrPreviousField($event, 1)">
+          @keyup="nextOrPreviousField($event, 1)"
+          v-model="birthDay[0]">
           <input type="text" ref="2" placeholder="D"
-          @keyup="nextOrPreviousField($event, 2)">
+          @keyup="nextOrPreviousField($event, 2)"
+          v-model="birthDay[1]">
         </div>
       </div>
       <div id="month">
@@ -22,9 +24,11 @@
         </div>
         <div class="lower">
           <input type="text" ref="3" placeholder="M"
-          @keyup="nextOrPreviousField($event, 3)">
+          @keyup="nextOrPreviousField($event, 3)"
+          v-model="birthMonth[0]">
           <input type="text" ref="4" placeholder="M"
-          @keyup="nextOrPreviousField($event, 4)">
+          @keyup="nextOrPreviousField($event, 4)"
+          v-model="birthMonth[1]">
         </div>
       </div>
       <div id="year">
@@ -33,13 +37,17 @@
         </div>
         <div class="lower">
           <input type="text" ref="5" placeholder="Y"
-          @keyup="nextOrPreviousField($event, 5)">
+          @keyup="nextOrPreviousField($event, 5)"
+          v-model="birthYear[0]">
           <input type="text" ref="6" placeholder="Y"
-          @keyup="nextOrPreviousField($event, 6)">
+          @keyup="nextOrPreviousField($event, 6)"
+          v-model="birthYear[1]">
           <input type="text" ref="7" placeholder="Y"
-          @keyup="nextOrPreviousField($event, 7)">
+          @keyup="nextOrPreviousField($event, 7)"
+          v-model="birthYear[2]">
           <input type="text" ref="8" placeholder="Y"
-          @keyup="nextOrPreviousField($event, 8)">
+          @keyup="nextOrPreviousField($event, 8)"
+          v-model="birthYear[3]">
         </div>
       </div>
     </div>
@@ -50,14 +58,18 @@
       </div>
       <div id="gender">
         <ul>
-          <li v-for="gender in genders" :key="gender">
+          <li v-for="(gender, i) in genders" :key="i"
+          @click="selectGender(i)"
+          :class="{gender_selected: isGenderSel(i)}">
             <p>{{ gender }}</p>
           </li>
         </ul>
       </div>
       <div id="gender_orientation">
         <ul>
-          <li v-for="genderId in gendersIds" :key="genderId">
+          <li v-for="(genderId, i) in gendersIds" :key="i"
+          @click="selectOrientation(i)"
+          :class="{gender_selected: selGenderId[i]}">
             <p>{{ genderId }}</p>
           </li>
         </ul>
@@ -70,21 +82,52 @@
 export default {
   data() {
     return {
+      birthDay: [null, null],
+      birthMonth: [null, null],
+      birthYear: [null, null, null, null],
+      gendersDB: ['man', 'woman'],
+      genderIdsDB: ['straight', 'bi', 'gay', 'lesbian', 'trans', 'non-binary'],
       genders: ['Man', 'Woman'],
-      gendersIds: ['Bi', 'Gay', 'Lesbian', 'Trans', 'Non-binary']
+      gendersIds: ['Straight', 'Bi', 'Gay', 'Lesbian', 'Trans', 'Non-binary'],
+      selGender: null,
+      selGenderId: [true, false, false, false, false, false]
     }
   },
   mounted() {
     this.$refs[1].focus()
   },
   methods: {
-    nextOrPreviousField(e, refNum) {
-      console.log(e.keyCode)
+     isGenderSel(i) {
+      const gender = this.selGender
+      const genderDB = this.gendersDB[i]
 
+      if (gender == genderDB) {
+        return true
+      } else {
+        return false
+      }
+    },
+    // isGenderIdSel(i) {
+      // const genderId = this.selGenderId
+      // const genderDB = this.gendersDB[i]
+    // },
+    selectOrientation(i) {
+      this.selGenderId[i] = !this.selGenderId[i]
+    },
+    selectGender(i) {
+      if (this.selGender === null) {
+        this.selGender = this.gendersDB[i]
+      } else if (this.selGender === 'man') {
+        this.selGender = 'woman'
+      } else {
+        this.selGender = 'man'
+      }
+    },
+    nextOrPreviousField(e, refNum) {
       if (e.keyCode === 8 && refNum > 1) {
         this.$refs[refNum - 1].focus()
         this.$refs[refNum - 1].select()
-      } else {
+      } else if (refNum < 8) {
         this.$refs[refNum + 1].focus()
       }
     }
@@ -95,6 +138,12 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/mixins/centerXY';
 @import '@/assets/mixins/centerX';
+
+.gender_selected {
+  background-color: white !important;
+  color: black !important;
+  border: 2px solid rgba(0, 0, 0, 0.7) !important;
+}
 
 #identification {
   height: 60%;
@@ -142,6 +191,7 @@ export default {
           transition: 0.2s ease;
           transform: scale(1.05);
           border: 1px solid white;
+          background-color: rgba(0, 0, 0, 0.1);
         }
       }
     }

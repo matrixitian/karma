@@ -6,7 +6,7 @@
                 <component :is="mainComponent"></component>
             </keep-alive>
         </div>
-        <Footer id="Footer" />
+        <Footer id="Footer" :curPage="currentPage" />
     </div>
 </template>
 
