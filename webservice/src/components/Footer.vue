@@ -2,7 +2,7 @@
   <div>
     <div id="centerer">
       <div id="last" v-if="curPage !== 1">
-        <button @submit.prevent>Back</button>
+        <button @click="goToLastPage()">Back</button>
       </div>
       <div id="dots">
         <ul>
@@ -10,7 +10,7 @@
         </ul>
       </div>
       <div id="next" v-if="pageDataIsValid">
-        <button @submit.prevent="requestNextPage()">Next</button>
+        <button @click="requestNextPage()">Next</button>
       </div>
     </div>
   </div>
@@ -26,19 +26,21 @@ export default {
   },
   methods: {
     requestNextPage() {
+      console.log('runs')
       this.$store.commit('requestNextPage')
+    },
+    goToLastPage() {
+      this.$store.commit('requestLastPage')
     }
   },
   created() {
-     this.$store.subscribe(async(mutation, state) => {
+     this.$store.subscribe(async(mutation) => {
       if (mutation.type === 'setPageDataValid') {
-          if (state.pageDataIsValid) {
-            this.pageDataIsValid = true
-          }
+        this.pageDataIsValid = true
       }
 
       if (mutation.type === 'resetPageDataIsValid') {
-          this.pageDataIsValid = false
+        this.pageDataIsValid = false
       }
     })
   }

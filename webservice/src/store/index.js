@@ -15,6 +15,10 @@ export default createStore({
     requestNextPage() {
       this.nextPageRequested = true
       this.nextPageRequested = false
+    },
+    requestLastPage() {
+      this.lastPageRequested = true
+      this.lastPageRequested = false
     }
   },
   actions: {

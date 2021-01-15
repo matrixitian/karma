@@ -22,6 +22,13 @@ export default {
                 this.currentPage++
                 this.switchPage()
             }
+
+             if (mutation.type === 'requestLastPage') {
+                if (this.currentPage > 1) {
+                    this.currentPage--
+                    this.switchPage()
+                }
+            }
         })
     },
     components: {
