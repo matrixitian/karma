@@ -63,7 +63,7 @@
     </div>
 
     <div id="identification">
-      <div id="id_sentence">
+      <div class="id_sentence">
         <p>Wie identifizierst du dich?</p>
       </div>
       <div id="gender">
@@ -75,12 +75,15 @@
           </li>
         </ul>
       </div>
+      <div class="id_sentence" id="lower_line">
+        <p>What are you looking for?</p>
+      </div>
       <div id="gender_orientation">
         <ul>
-          <li v-for="(genderId, i) in gendersIds" :key="i"
+          <li v-for="(relationshipType, i) in relationshipTypes" :key="i"
           @click="selectOrientation(i)"
-          :class="{gender_selected: selGenderId[i]}">
-            <p>{{ genderId }}</p>
+          :class="{gender_selected: selrelationshipType[i]}">
+            <p>{{ relationshipType }}</p>
           </li>
         </ul>
       </div>
@@ -99,12 +102,12 @@ export default {
       birthDay: [null, null],
       birthMonth: [null, null],
       birthYear: [null, null, null, null],
-      gendersDB: ['man', 'woman'],
-      genderIdsDB: ['straight', 'bi', 'gay', 'lesbian', 'trans', 'non-binary'],
-      genders: ['Man', 'Woman'],
-      gendersIds: ['Straight', 'Bi', 'Gay', 'Lesbian', 'Trans', 'Non-binary'],
+      gendersDB: ['man', 'woman', 'trans', 'non-binary'],
+      relationshipTypesDB: ['cool_people', 'friends', 'fun', 'relationship', 'marriage'],
+      genders: ['Man', 'Woman', 'Trans', 'Non-Binary'],
+      relationshipTypes: ['Cool People', 'Friends', 'Fun', 'Relationship', 'Marriage'],
       selGender: null,
-      selGenderId: [true, false, false, false, false, false],
+      selrelationshipType: [false, true, false, false, false],
       birthDateIsValid: false,
       userAge: null,
       curPage: 1
@@ -126,11 +129,11 @@ export default {
       this.userAge = getAge(birthDate)
 
       if (this.birthDateIsValid && this.userAge
-      && this.selGender && this.selGenderId.includes(true)) {
-        console.log('Paga data is valid.')
+      && this.selGender && this.selrelationshipType.includes(true)) {
+        console.log('Page data is valid.')
         this.$store.commit('setPageDataValid')
       } else {
-        console.log('Paga data is not valid.')
+        console.log('Page data is not valid.')
       }
     },
     isGenderSel(i) {
@@ -144,16 +147,10 @@ export default {
       }
     },
     selectOrientation(i) {
-      this.selGenderId[i] = !this.selGenderId[i]
+      this.selrelationshipType[i] = !this.selrelationshipType[i]
     },
     selectGender(i) {
-      if (this.selGender === null) {
-        this.selGender = this.gendersDB[i]
-      } else if (this.selGender === 'man') {
-        this.selGender = 'woman'
-      } else {
-        this.selGender = 'man'
-      }
+      this.selGender = this.gendersDB[i]
     },
     nextOrPreviousField(e, refNum) {
       if (e.keyCode === 8 && refNum > 1) {
@@ -179,7 +176,7 @@ export default {
 
 #identification {
   height: 60%;
-  #id_sentence {
+  .id_sentence {
     margin: auto;
     position: relative;
     height: 60px;
@@ -190,9 +187,6 @@ export default {
       color: white;
       font-size: 20px;
     }
-  }
-  #gender_orientation {
-    border-top: 2px solid rgba(0, 0, 0, 0.1);
   }
   #gender, #gender_orientation {
     height: 80px;
@@ -228,6 +222,10 @@ export default {
       }
     }
   }
+}
+
+#lower_line {
+  border-top: 2px solid rgba(0, 0, 0, 0.1) !important;
 }
 
 #birthday {
