@@ -5,11 +5,13 @@
         <input type="text" placeholder="Job Titel"
         v-model="searchValue"
         @focus="showList()"
-        @keyup="query()">
+        @keyup="query()"
+        ref="searchBar">
     </div>
     <div id="icons">
       <img id="close" src="@/assets/icons/x.svg" alt=""
-      @click="clearSearch()">
+      @click="clearSearch()"
+      v-show="showClearBtn()">
       <img id="toggle" src="@/assets/icons/arrow.svg" alt=""
       :class="{listOpen: listVisible}"
       @click="toggleList()">
@@ -41,9 +43,18 @@ export default {
     this.activeList = this.list
   },
   methods: {
+    showClearBtn() {
+      if (this.searchValue) {
+        if (this.searchValue.length > 0) return true
+      }
+
+      return false
+    },
     clearSearch() {
       this.searchValue = null
       this.activeList = this.list
+
+      this.$refs.searchBar.focus()
     },
     query() {
       const z = this
