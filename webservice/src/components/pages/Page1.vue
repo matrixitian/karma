@@ -12,10 +12,12 @@
         <div class="lower">
           <input type="text" ref="1" placeholder="D"
           @keyup="nextOrPreviousField($event, 1)"
-          v-model="birthDay[0]">
+          v-model="birthDay[0]"
+          maxlength="1">
           <input type="text" ref="2" placeholder="D"
           @keyup="nextOrPreviousField($event, 2)"
-          v-model="birthDay[1]">
+          v-model="birthDay[1]"
+          maxlength="1">
         </div>
       </div>
       <div id="month">
@@ -25,10 +27,12 @@
         <div class="lower">
           <input type="text" ref="3" placeholder="M"
           @keyup="nextOrPreviousField($event, 3)"
-          v-model="birthMonth[0]">
+          v-model="birthMonth[0]"
+          maxlength="1">
           <input type="text" ref="4" placeholder="M"
           @keyup="nextOrPreviousField($event, 4)"
-          v-model="birthMonth[1]">
+          v-model="birthMonth[1]"
+          maxlength="1">
         </div>
       </div>
       <div id="year">
@@ -38,16 +42,20 @@
         <div class="lower">
           <input type="text" ref="5" placeholder="Y"
           @keyup="nextOrPreviousField($event, 5)"
-          v-model="birthYear[0]">
+          v-model="birthYear[0]"
+          maxlength="1">
           <input type="text" ref="6" placeholder="Y"
           @keyup="nextOrPreviousField($event, 6)"
-          v-model="birthYear[1]">
+          v-model="birthYear[1]"
+          maxlength="1">
           <input type="text" ref="7" placeholder="Y"
           @keyup="nextOrPreviousField($event, 7)"
-          v-model="birthYear[2]">
+          v-model="birthYear[2]"
+          maxlength="1">
           <input type="text" ref="8" placeholder="Y"
           @keyup="nextOrPreviousField($event, 8)"
-          v-model="birthYear[3]">
+          v-model="birthYear[3]"
+          maxlength="1">
         </div>
       </div>
     </div>
@@ -79,6 +87,10 @@
 </template>
 
 <script>
+import getAge from 'get-age'
+import validator from 'is-my-date-valid'
+const validateDate = validator({ format: 'MM-DD-YYYY' })
+
 export default {
   data() {
     return {
@@ -97,7 +109,20 @@ export default {
     this.$refs[1].focus()
   },
   methods: {
-     isGenderSel(i) {
+    checkBirthdayValidity() {
+      // bday format is mm-dd-yyyy
+      const birthDay = `${this.birthDay[0]}${this.birthDay[1]}`
+      const birthMonth = `${this.birthMonth[0]}${this.birthMonth[1]}`
+      const birthYear = `${this.birthYear[0]}${this.birthYear[1]}${this.birthYear[2]}${this.birthYear[3]}`
+
+      const birthDate = `${birthMonth}-${birthDay}-${birthYear}`
+      
+      const dateIsValid = validateDate(birthDate)
+      const userAge = getAge(birthDate)
+
+      console.log(dateIsValid, userAge)
+    },
+    isGenderSel(i) {
       const gender = this.selGender
       const genderDB = this.gendersDB[i]
 
@@ -107,10 +132,6 @@ export default {
         return false
       }
     },
-    // isGenderIdSel(i) {
-      // const genderId = this.selGenderId
-      // const genderDB = this.gendersDB[i]
-    // },
     selectOrientation(i) {
       this.selGenderId[i] = !this.selGenderId[i]
     },
