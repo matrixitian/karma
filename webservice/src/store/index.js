@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    currentPage: 1,
     pageDataIsValid: false,
     nextPageRequested: false
   },
@@ -15,10 +16,12 @@ export default createStore({
     requestNextPage() {
       this.nextPageRequested = true
       this.nextPageRequested = false
+      this.currentPage++
     },
     requestLastPage() {
       this.lastPageRequested = true
       this.lastPageRequested = false
+      this.currentPage--
     }
   },
   actions: {

@@ -1,5 +1,7 @@
 <template>
-  <p>PageTwo!</p>
+  <div>
+      <p>Page two</p>
+  </div>
 </template>
 
 <script>

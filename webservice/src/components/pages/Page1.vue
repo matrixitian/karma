@@ -1,5 +1,7 @@
 <template>
-  <div id="mainPageOne">
+  <div id="mainPageOne"
+  @click="checkDataValidity()"
+  @keyup="checkDataValidity()">
     <div id="sentence">
       <p>Jetzt brauchen wir nur ein paar Daten!</p>
     </div>
@@ -104,18 +106,15 @@ export default {
       selGender: null,
       selGenderId: [true, false, false, false, false, false],
       birthDateIsValid: false,
-      userAge: null
+      userAge: null,
+      curPage: 1
     }
   },
   mounted() {
     this.$refs[1].focus()
-
-    setInterval(() => {
-      this.checkBirthdayValidity()
-    }, 200)
   },
   methods: {
-    checkBirthdayValidity() {
+    checkDataValidity() {
       // bday format is mm-dd-yyyy
       const birthDay = `${this.birthDay[0]}${this.birthDay[1]}`
       const birthMonth = `${this.birthMonth[0]}${this.birthMonth[1]}`

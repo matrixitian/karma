@@ -67,7 +67,6 @@ button {
   color: white;
   font-size: 15px;
   padding: 7px 20px 7px 20px;
-  background-color: rgba(0, 200, 0, 0.4);
 
   &:hover {
     transition: .2s ease;
