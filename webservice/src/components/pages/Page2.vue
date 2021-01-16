@@ -1,5 +1,5 @@
 <template>
-  <div id="pageTwo">
+  <div id="pageTwo" v-if="arrCreationComplete">
       <div class="job" id="private_info">
         <div id="private_box"></div>
         <p id="private_info_text">Blaue felder sind an deinem Profil nicht Sichtbar!</p>
@@ -8,7 +8,7 @@
       <div class="job">
           <div class="job_centerer">
             <div class="job_sentence">
-              <p>Ich bin beruflich...</p>
+              <p>I work as...</p>
             </div>
             <div class="job_selector z_index_100">
                 <Select :list="['MIT', 'Hardvard', 'Oxford']" />
@@ -19,7 +19,7 @@
       <div class="job">
           <div class="job_centerer">
             <div class="job_sentence">
-              <p>Hast du Kinder?</p>
+              <p>Do you have children?</p>
             </div>
             <div class="job_selector">
                 <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
@@ -35,18 +35,19 @@
           <ul>
             <li>
               <p>Height</p>
-               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select z_index_3"/>
+               <Select :list="heights" :width="200"
+               class="Select z_index_3" :onlySelect="true"/>
             </li>
             <li>
               <p>Weight</p>
-               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select z_index_2"/>
+               <Select :list="weights" 
+              :width="200" class="Select z_index_2" :onlySelect="true"/>
             </li>
             <li>
               <p>Fit</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select z_index_1" :readOnly="true" />
+              :width="200" class="Select z_index_1" :readOnly="true" 
+              :onlySelect="true"/>
             </li>
           </ul>
         </div>
@@ -55,17 +56,20 @@
             <li>
               <p>I drink...</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select z_index_3" :readOnly="true"/>
+              :width="200" class="Select z_index_3" :readOnly="true"
+              :onlySelect="true"/>
             </li>
             <li>
               <p>I smoke...</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select z_index_2" :readOnly="true" />
+              :width="200" class="Select z_index_2" :readOnly="true" 
+              :onlySelect="true"/>
             </li>
             <li>
               <p class="private_text">I do drugs...</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select z_index_1" :readOnly="true" />
+              :width="200" class="Select z_index_1" :readOnly="true" 
+              :onlySelect="true"/>
             </li>
           </ul>
         </div>
@@ -90,9 +94,31 @@
 import Select from '@/components/parts/Select'
 
 export default {
-    components: {
-        Select
+  data() {
+    return {
+      heights: [],
+      weights: [],
+      arrCreationComplete: false,
+      heightUnit: 'cm',
+      weightUnit: 'kg'
     }
+  },
+  components: {
+      Select
+  },
+  mounted() {
+    let i
+    for (i = 120; i < 272; i++) {
+      this.heights.push(`${i} cm`)
+    }
+
+    for (i = 40; i < 250; i++) {
+      this.weights.push(`${i} kg`)
+    }
+
+    console.log(this.weights)
+    this.arrCreationComplete = true
+  },
 }
 </script>
 
@@ -104,8 +130,6 @@ export default {
 .z_index_2 { z-index: 2; }
 .z_index_3 { z-index: 3; }
 .z_index_4 { z-index: 4; }
-
-
 
 #private_info {
   background-color: rgba(255, 255, 255, 0.1);
@@ -198,7 +222,7 @@ export default {
     margin: auto;
     .job_sentence, .job_sentence2 {
         position: relative;
-        width: 35%;
+        width: 50%;
         height: 100%;
         float: left;
         align-items: center;
@@ -214,7 +238,7 @@ export default {
     .job_selector {
       height: 100%;
       position: relative;
-      width: 65%;
+      width: 50%;
       float: right;
       align-items: center;
       display: flex;

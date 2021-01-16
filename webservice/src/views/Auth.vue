@@ -18,7 +18,7 @@
       <transition name="slide-fade">
       <div id="center" v-if="mounted">
         <p>{{ signUpForm ? "Create a new account" : "Login to your account" }}</p>
-        <p v-show="signUpForm">Join Sproutt and find new people alike!</p>
+        <p v-show="signUpForm">Join Karma and find new people alike!</p>
         <input v-show="signUpForm" type="text" placeholder="Your first name" ref="fname"
         v-model="name"
         @keyup="hideShowInfo">
@@ -46,12 +46,12 @@
             {{ curInfoMessage }}
           </p>
         </transition>
-        <p id="terms" v-if="signUpForm">By creating your Sproutt account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
+        <p id="terms" v-if="signUpForm">By creating your Karma account, you agree to our <a>Terms</a>, <a>Data Policy</a> and <a>Cookie Policy</a>. You may receive E-Mails from us and may opt out at any time.</p>
         <p v-show="!signUpForm" id="reset_password">Forgot your password?</p>
         <button type="submit" @click.prevent="authenticate()"
         id="formButton"
         :class="{loginBtnMargin: !signUpForm}">
-          {{ signUpForm ? "Create your Sproutt account" : "Login" }}
+          {{ signUpForm ? "Create your Karma account" : "Login" }}
         </button>
       </div>
       </transition>
@@ -88,7 +88,7 @@
         <div id="bottom_placeholder"></div>
       </div>
       <div id="license">
-        <p><span id="copyright">© Sproutt 2020</span>
+        <p><span id="copyright">© Karma Social 2020</span>
         <a href="">Terms </a>
         <a href="">Privacy </a>
         <a href="">Cookies </a>
