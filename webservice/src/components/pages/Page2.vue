@@ -22,7 +22,7 @@
               <p>{{ keywords[1] }}</p>
             </div>
             <div class="job_selector">
-                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+                <Select :list="haveChildren" 
                 :width="200" :onlySelect="true"
                 :readOnly="true"
                 class="z_index_4"/>
@@ -45,7 +45,7 @@
             </li>
             <li>
               <p>{{ keywords[4] }}</p>
-               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+               <Select :list="fit" 
               :width="200" class="Select z_index_1" :readOnly="true" 
               :onlySelect="true"/>
             </li>
@@ -55,19 +55,19 @@
           <ul>
             <li>
               <p>{{ keywords[5] }}</p>
-               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+               <Select :list="rightColumn" 
               :width="200" class="Select z_index_3" :readOnly="true"
               :onlySelect="true"/>
             </li>
             <li>
               <p>{{ keywords[6] }}</p>
-               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+               <Select :list="rightColumn" 
               :width="200" class="Select z_index_2" :readOnly="true" 
               :onlySelect="true"/>
             </li>
             <li>
               <p class="private_text">{{ keywords[7] }}</p>
-               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+               <Select :list="rightColumn" 
               :width="200" class="Select z_index_1" :readOnly="true" 
               :onlySelect="true"/>
             </li>
@@ -81,7 +81,7 @@
               <p>{{ keywords[8] }}</p>
             </div>
             <div class="job_selector">
-                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+                <Select :list="wantChildren" 
                 :width="200" :onlySelect="true"
                 :readOnly="true" />
             </div>

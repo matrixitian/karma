@@ -1,5 +1,5 @@
 export const data = {
-    "privacyS": "Blue fields will not be shown on your profile!",
+    "privacyS": "will not be shown on your profile!",
     "jobTitlePlaceholder": "Job title",
     "haveChildren": ['No', '1 Kid', '2 Kids', '3 Kids', 'More than 3'],
     "keywords": [

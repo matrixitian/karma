@@ -162,7 +162,7 @@ ul {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   padding: 0;
-  max-height: 500px;
+  max-height: 300px;
   overflow-y: auto !important;
   li {
     padding: 0;
