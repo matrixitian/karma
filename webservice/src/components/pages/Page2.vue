@@ -92,6 +92,12 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/mixins/centerY';
+@import '@/assets/mixins/centerXY';
+
+
+#pageTwo {
+  @include centerXY;
+}
 
 #bottom {
   margin-top: 30px;
