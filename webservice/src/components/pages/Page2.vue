@@ -23,6 +23,60 @@
             </div>
           </div>
       </div>
+
+      <div id="more_info">
+        <div id="left">
+          <ul>
+            <li>
+              <p>Height</p>
+               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+              :width="200" class="Select"/>
+            </li>
+            <li>
+              <p>Weight</p>
+               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+              :width="200" class="Select"/>
+            </li>
+            <li>
+              <p>Fit</p>
+               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+              :width="200" class="Select"/>
+            </li>
+          </ul>
+        </div>
+        <div id="right">
+          <ul>
+            <li>
+              <p>I drink...</p>
+               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+              :width="200" class="Select"/>
+            </li>
+            <li>
+              <p>I smoke...</p>
+               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+              :width="200" class="Select"/>
+            </li>
+            <li>
+              <p>I do drugs...</p>
+               <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+              :width="200" class="Select"/>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+       <div class="job" id="bottom">
+          <div class="job_centerer">
+            <div class="job_sentence">
+              <p>Willst du Kinder?</p>
+            </div>
+            <div class="job_selector">
+                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
+                :width="200" :onlySelect="true"
+                :readOnly="true"/>
+            </div>
+          </div>
+      </div>
   </div>
 </template>
 
@@ -39,14 +93,59 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/mixins/centerY';
 
+#bottom {
+  margin-top: 30px;
+}
+
+#more_info {
+  height: 150px;
+  width: 700px;
+  margin: auto;
+  // background-color: blueviolet;
+  position: relative;
+  #left, #right {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+  }
+  #right {
+    right: 0;
+  }
+  #left, #right {
+    // background-color: brown;
+    ul {
+      height: 100%;
+      padding: 0;
+      li {
+        width: 100%;
+        height: 33%;
+        // background-color: blue;
+        position: relative;
+        p {
+          @include centerY;
+          float: left;
+          left: 10px;
+          font-size: 20px;
+          font-weight: bold;
+          color: white;
+        }
+        .Select {
+          @include centerY;
+          right: 30px;
+          float: right;
+        }
+      }
+    }
+  }
+}
+
 .z_index_100 {
   z-index: 100;
 }
 
 .job {
     width: 100%;
-    height: 100px;
-    background-color: yellow;
+    height: 50px;
 }
 
 .job_centerer {
@@ -54,7 +153,6 @@ export default {
     width: 500px;
     height: 100%;
     margin: auto;
-    background-color: green;
     .job_sentence, .job_sentence2 {
         position: relative;
         width: 35%;
