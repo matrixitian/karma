@@ -1,5 +1,10 @@
 <template>
   <div id="pageTwo">
+      <div class="job" id="private_info">
+        <div id="private_box"></div>
+        <p id="private_info_text">Blaue felder sind an deinem Profil nicht Sichtbar!</p>
+      </div>
+
       <div class="job">
           <div class="job_centerer">
             <div class="job_sentence">
@@ -19,7 +24,8 @@
             <div class="job_selector">
                 <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
                 :width="200" :onlySelect="true"
-                :readOnly="true"/>
+                :readOnly="true"
+                class="z_index_4"/>
             </div>
           </div>
       </div>
@@ -30,17 +36,17 @@
             <li>
               <p>Height</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select"/>
+              :width="200" class="Select z_index_3"/>
             </li>
             <li>
               <p>Weight</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select"/>
+              :width="200" class="Select z_index_2"/>
             </li>
             <li>
               <p>Fit</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select"/>
+              :width="200" class="Select z_index_1" :readOnly="true" />
             </li>
           </ul>
         </div>
@@ -49,17 +55,17 @@
             <li>
               <p>I drink...</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select"/>
+              :width="200" class="Select z_index_3" :readOnly="true"/>
             </li>
             <li>
               <p>I smoke...</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select"/>
+              :width="200" class="Select z_index_2" :readOnly="true" />
             </li>
             <li>
-              <p>I do drugs...</p>
+              <p class="private_text">I do drugs...</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
-              :width="200" class="Select"/>
+              :width="200" class="Select z_index_1" :readOnly="true" />
             </li>
           </ul>
         </div>
@@ -73,7 +79,7 @@
             <div class="job_selector">
                 <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
                 :width="200" :onlySelect="true"
-                :readOnly="true"/>
+                :readOnly="true" />
             </div>
           </div>
       </div>
@@ -94,6 +100,40 @@ export default {
 @import '@/assets/mixins/centerY';
 @import '@/assets/mixins/centerXY';
 
+.z_index_1 { z-index: 1; }
+.z_index_2 { z-index: 2; }
+.z_index_3 { z-index: 3; }
+.z_index_4 { z-index: 4; }
+
+
+
+#private_info {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  height: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+#private_info_text {
+  color: rgb(1, 27, 51);
+  font-size: 15px;
+  font-weight: bold;
+}
+
+#private_box {
+  margin-right: 10px;
+  background-color:  rgb(54, 215, 255);
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+}
+
+.private_text {
+  color: rgb(54, 215, 255) !important;
+}
 
 #pageTwo {
   @include centerXY;
@@ -107,7 +147,6 @@ export default {
   height: 150px;
   width: 700px;
   margin: auto;
-  // background-color: blueviolet;
   position: relative;
   #left, #right {
     width: 50%;
@@ -118,14 +157,12 @@ export default {
     right: 0;
   }
   #left, #right {
-    // background-color: brown;
     ul {
       height: 100%;
       padding: 0;
       li {
         width: 100%;
         height: 33%;
-        // background-color: blue;
         position: relative;
         p {
           @include centerY;
