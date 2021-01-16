@@ -2,7 +2,7 @@
 <div id="Selector" :class="{width200: width === 200}">
   <div id="search">
     <div id="input">
-        <input type="text" placeholder="Job Titel"
+        <input type="text" :placeholder="defaultPlaceholder"
         v-model="searchValue"
         @focus="showList()"
         @keyup="query()"
@@ -23,7 +23,7 @@
     <ul :class="{width200: width === 200}">
         <li v-for="(jobTitle, i) in activeList" :key="i"
         @click="selectItem(jobTitle)">
-          <p>{{ jobTitle }}</p>
+            <p>{{ jobTitle }}</p>
         </li>
     </ul>
   </div>
@@ -33,7 +33,8 @@
 
 <script>
 export default {
-  props: ['list', 'onlySelect', 'width', 'readOnly'],
+  props: ['list', 'onlySelect', 'width', 'readOnly', 'defaultIndex',
+  'defaultPlaceholder'],
   data() {
     return {
       listVisible: false,
@@ -45,7 +46,11 @@ export default {
     this.activeList = this.list
 
     if (this.onlySelect) {
-      this.searchValue = this.list[0]
+      if (this.defaultIndex) {
+        this.searchValue = this.list[this.defaultIndex]
+      } else {
+        this.searchValue = this.list[0]
+      }
     }
   },
   methods: {

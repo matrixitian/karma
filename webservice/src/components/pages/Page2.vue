@@ -1,5 +1,6 @@
 <template>
-  <div id="pageTwo" v-if="arrCreationComplete && langImported">
+  <div id="pageTwo" v-if="arrCreationComplete && langImported"
+  @click="checkPageDataIsValid()">
       <div class="job" id="private_info">
         <div id="private_box"></div>
         <p id="private_info_text">{{ privacyS }}</p>
@@ -11,7 +12,8 @@
               <p>{{ keywords[0] }}</p>
             </div>
             <div class="job_selector z_index_100">
-                <Select :list="['MIT', 'Hardvard', 'Oxford']" />
+                <Select :list="['MIT', 'Hardvard', 'Oxford']" 
+                :defaultPlaceholder="jobTitlePlaceholder"/>
             </div>
           </div>
       </div>
@@ -36,7 +38,8 @@
             <li>
               <p>{{ keywords[2] }}</p>
                <Select :list="heights" :width="200"
-               class="Select z_index_3" :onlySelect="true"/>
+               class="Select z_index_3" :onlySelect="true"
+               :defaultIndex="50"/>
             </li>
             <li>
               <p>{{ keywords[3] }}</p>
@@ -115,6 +118,8 @@ export default {
       Select
   },
   mounted() {
+    this.$store.commit('setPageDataValid')
+
     this.importLanguage()
 
     let i
@@ -129,6 +134,10 @@ export default {
     this.arrCreationComplete = true
   },
   methods: {
+    checkPageDataIsValid() {
+      // if ()
+      this.$store.commit('setPageDataIsValid')
+    },
     importLanguage() {
       // Import translation
       let lang = localStorage.getItem('lang')
