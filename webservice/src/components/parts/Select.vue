@@ -1,12 +1,14 @@
 <template>
-<div id="Selector">
+<div id="Selector" :class="{width200: width === 200}">
   <div id="search">
     <div id="input">
         <input type="text" placeholder="Job Titel"
         v-model="searchValue"
         @focus="showList()"
         @keyup="query()"
-        ref="searchBar">
+        ref="searchBar"
+        :readonly="readOnly"
+        :class="{pointer: readOnly}">
     </div>
     <div id="icons">
       <img id="close" src="@/assets/icons/x.svg" alt=""
@@ -18,7 +20,7 @@
     </div>
   </div>
   <div id="list" v-show="listVisible">
-    <ul>
+    <ul :class="{width200: width === 200}">
         <li v-for="(jobTitle, i) in activeList" :key="i"
         @click="selectItem(jobTitle)">
           <p>{{ jobTitle }}</p>
@@ -31,7 +33,7 @@
 
 <script>
 export default {
-  props: ['list'],
+  props: ['list', 'onlySelect', 'width', 'readOnly'],
   data() {
     return {
       listVisible: false,
@@ -41,10 +43,14 @@ export default {
   },
   mounted() {
     this.activeList = this.list
+
+    if (this.onlySelect) {
+      this.searchValue = this.list[0]
+    }
   },
   methods: {
     showClearBtn() {
-      if (this.searchValue) {
+      if (this.searchValue && !this.onlySelect) {
         if (this.searchValue.length > 0) return true
       }
 
@@ -85,6 +91,14 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/mixins/centerY';
 
+.pointer {
+  cursor: pointer !important;
+}
+
+.width200 {
+  width: 200px !important;
+}
+
 #search {
   position: relative;
   #icons {
@@ -106,7 +120,7 @@ export default {
       background-color: rgba(200, 0, 0, 0.4);
     }
     #toggle {
-      transform: rotate(-90deg);
+      transform: rotate(90deg);
       background-color: rgba(0, 0, 200, 0.4);
     }
   }
@@ -114,7 +128,7 @@ export default {
 
 .listOpen {
   transition: .2s ease;
-  transform: rotate(90deg) !important;
+  transform: rotate(-90deg) !important;
 }
 
 #Selector {
