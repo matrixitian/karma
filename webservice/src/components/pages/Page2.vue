@@ -1,14 +1,14 @@
 <template>
-  <div id="pageTwo" v-if="arrCreationComplete">
+  <div id="pageTwo" v-if="arrCreationComplete && langImported">
       <div class="job" id="private_info">
         <div id="private_box"></div>
-        <p id="private_info_text">Blaue felder sind an deinem Profil nicht Sichtbar!</p>
+        <p id="private_info_text">{{ privacyS }}</p>
       </div>
 
       <div class="job">
           <div class="job_centerer">
             <div class="job_sentence">
-              <p>I work as...</p>
+              <p>{{ keywords[0] }}</p>
             </div>
             <div class="job_selector z_index_100">
                 <Select :list="['MIT', 'Hardvard', 'Oxford']" />
@@ -19,7 +19,7 @@
       <div class="job">
           <div class="job_centerer">
             <div class="job_sentence">
-              <p>Do you have children?</p>
+              <p>{{ keywords[1] }}</p>
             </div>
             <div class="job_selector">
                 <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
@@ -34,17 +34,17 @@
         <div id="left">
           <ul>
             <li>
-              <p>Height</p>
+              <p>{{ keywords[2] }}</p>
                <Select :list="heights" :width="200"
                class="Select z_index_3" :onlySelect="true"/>
             </li>
             <li>
-              <p>Weight</p>
+              <p>{{ keywords[3] }}</p>
                <Select :list="weights" 
               :width="200" class="Select z_index_2" :onlySelect="true"/>
             </li>
             <li>
-              <p>Fit</p>
+              <p>{{ keywords[4] }}</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
               :width="200" class="Select z_index_1" :readOnly="true" 
               :onlySelect="true"/>
@@ -54,19 +54,19 @@
         <div id="right">
           <ul>
             <li>
-              <p>I drink...</p>
+              <p>{{ keywords[5] }}</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
               :width="200" class="Select z_index_3" :readOnly="true"
               :onlySelect="true"/>
             </li>
             <li>
-              <p>I smoke...</p>
+              <p>{{ keywords[6] }}</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
               :width="200" class="Select z_index_2" :readOnly="true" 
               :onlySelect="true"/>
             </li>
             <li>
-              <p class="private_text">I do drugs...</p>
+              <p class="private_text">{{ keywords[7] }}</p>
                <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
               :width="200" class="Select z_index_1" :readOnly="true" 
               :onlySelect="true"/>
@@ -78,7 +78,7 @@
        <div class="job" id="bottom">
           <div class="job_centerer">
             <div class="job_sentence">
-              <p>Willst du Kinder?</p>
+              <p>{{ keywords[8] }}</p>
             </div>
             <div class="job_selector">
                 <Select :list="['Keine Kinder', '1', '2', 'Mehr als 2']" 
@@ -98,15 +98,25 @@ export default {
     return {
       heights: [],
       weights: [],
+      langImported: false,
       arrCreationComplete: false,
       heightUnit: 'cm',
-      weightUnit: 'kg'
+      weightUnit: 'kg',
+      privacyS: null,
+      jobTitlePlaceholder: null,
+      keywords: [],
+      haveChildren: [],
+      fit: [],
+      rightColumn: [],
+      wantChildren: []
     }
   },
   components: {
       Select
   },
   mounted() {
+    this.importLanguage()
+
     let i
     for (i = 120; i < 272; i++) {
       this.heights.push(`${i} cm`)
@@ -116,9 +126,28 @@ export default {
       this.weights.push(`${i} kg`)
     }
 
-    console.log(this.weights)
     this.arrCreationComplete = true
   },
+  methods: {
+    importLanguage() {
+      // Import translation
+      let lang = localStorage.getItem('lang')
+      if (!lang) lang = 'english'
+
+      const translation = require(`@/assets/translations/page_2_${lang}.js`)
+
+      this.privacyS = translation.data.privacyS
+      this.jobTitlePlaceholder = translation.data.jobTitlePlaceholder
+      this.keywords = translation.data.keywords
+
+      this.haveChildren = translation.data.haveChildren
+      this.fit = translation.data.fit
+      this.rightColumn = translation.data.rightColumn
+      this.wantChildren = translation.data.wantChildren
+
+      this.langImported = true
+    }
+  }
 }
 </script>
 
