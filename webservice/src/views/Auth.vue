@@ -110,10 +110,10 @@ export default {
       storedLang: null,
       alreadySignedUp: null,
       passwordStrength: null,
-      name: 'Fred',
-      emailOrPhoneNum: 'holidayexplanation@gmail.com',
-      cEmailOrPhoneNum: 'holidayexplanation@gmail.com',
-      password: '!!Winter99!!',
+      name: null,
+      emailOrPhoneNum: null,
+      cEmailOrPhoneNum: null,
+      password: null,
       langs: [
         'english', 'deutsch', 'hrvatski'
       ],
@@ -222,7 +222,7 @@ export default {
               this.curInfoMessage = this.signUpFormText.data.successRedirecting
               
               setTimeout(() => {
-                this.$router.push({ name: 'Fillout' });
+                this.$router.push({ name: 'Fillout' })
               }, 1000)
             }
           })
@@ -239,7 +239,7 @@ export default {
             if (res.status === 200) {
               this.showInfo = true
               this.curInfoMessage = this.loginFormText.data.loginSuccesful
-              this.$router.push({ name: 'Home' });
+              this.$router.push({ name: 'Home' })
             }
           })
         }
